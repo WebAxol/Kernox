@@ -1,5 +1,5 @@
-import { PrototypeSchema } from "./types/PrototypeSchema.js";
-import { Entity } from "./Entity";
+import { PrototypeSchema } from "../types/PrototypeSchema.js";
+import { Entity } from "./Entity.js";
 
 export class EntityFactory{
     
@@ -81,6 +81,10 @@ export class EntityFactory{
     public copyFromPrototype(recipient : Entity, prototype : PrototypeSchema<any>) : void {
         
         this.deepAssign(recipient,prototype.attributes);
+    }
+
+    public sendToRest(entity : Entity) : void {
+        
     }
 
     private deepAssign(recipient : Object, prototype : any, seen = new WeakMap()) : void {
