@@ -23,7 +23,7 @@ export class LinearCollection implements AbstractCollection{
         return this.entities.has(entity);
     }
 
-    forEach(callback: (entity: Entity) => void): void {
+    iterate(callback: (entity: Entity) => void): void {
         this.entities.forEach(callback);
     }
 }

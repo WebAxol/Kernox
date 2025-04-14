@@ -1,4 +1,4 @@
-import { PrototypeSchema } from "../types/PrototypeSchema.js";
+import { PrototypeSchema } from "./PrototypeSchema.js";
 import { Entity } from "./Entity.js";
 
 export class EntityFactory{
@@ -7,7 +7,7 @@ export class EntityFactory{
     private pools :Map<string,[]> = new Map();
     private nextID : number = 0;
    
-    public registerType(prototype : PrototypeSchema<any>) : void {
+    public prototype(prototype : PrototypeSchema<any>) : void {
 
         const { name, inherits } = prototype;
 
@@ -55,7 +55,7 @@ export class EntityFactory{
         this.types.set(name, prototype);
     }
 
-    public createEntity(type : string, params : object) : Entity {
+    public create(type : string, params : object) : Entity {
 
         const prototype : PrototypeSchema<any> | undefined = this.types.get(type);
 

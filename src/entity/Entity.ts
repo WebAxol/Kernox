@@ -25,7 +25,7 @@ export class Entity {
         return this.__collections.has(collectionName);
     }
 
-    public getCollections() : Set<string> {
+    public gets() : Set<string> {
         return this.__collections;
     }
 

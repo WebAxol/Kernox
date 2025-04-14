@@ -3,7 +3,7 @@
 import EntityManager from "../../../src/EntityManager.js";
 const entityManager = new EntityManager({});
 
-entityManager.registerType('dummy',{'info' : {}});
+entityManager.prototype('dummy',{'info' : {}});
 
 for(let i = 0; i < 500; i++){
 

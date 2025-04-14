@@ -3,9 +3,9 @@ import { enemyPrototype, circlePrototype, spatialPrototype,kineticPrototype } fr
 
 const entityFactory = new EntityFactory();
 
-describe("EntityFactory.registerType()", () => {
+describe("EntityFactory.prototype()", () => {
 
-    const func = (prototype) => { return entityFactory.registerType(prototype) }
+    const func = (prototype) => { return entityFactory.prototype(prototype) }
 
     it("must register entity type if it does not exist", () => {
         expect(() => { func(spatialPrototype) }).not.toThrow(Error);

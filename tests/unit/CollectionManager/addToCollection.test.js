@@ -7,13 +7,13 @@ for(let i = 0; i < n; i++){
     
     test('properly creates new collection', () => {
 
-        expect(typeof collectionManager.registerCollection('collection' + i)).toEqual('object');
+        expect(typeof collectionManager.create('collection' + i)).toEqual('object');
 
     })
 
     test('properly detect existing collection when registering', () => {
 
-        expect(collectionManager.registerCollection('collection' + i)).toEqual(false);
+        expect(collectionManager.create('collection' + i)).toEqual(false);
 
     })
 

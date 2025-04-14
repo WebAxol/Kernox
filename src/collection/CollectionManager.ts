@@ -14,7 +14,7 @@ export class CollectionManager {
 
     constructor() {}
 
-    public getCollection(collectionName : string) : AbstractCollection {
+    public get(collectionName : string) : AbstractCollection {
         const collection = this.collections.get(collectionName);
         if (!collection) {
             throw new Error(`Collection '${collectionName}' is not registered.`);
@@ -22,7 +22,7 @@ export class CollectionManager {
         return collection;
     }
 
-    public registerCollection(collectionName : string, collectionType : CollectionType = "linear"): AbstractCollection {
+    public create(collectionName : string, collectionType : CollectionType = "linear"): AbstractCollection {
         
         if(!collectionName){
             throw new Error("Invalid collection name: it must be a nom-empty string");
@@ -45,13 +45,13 @@ export class CollectionManager {
     }
 
     public addEntityTo(entity : Entity, collectionName : string): void {
-        const collection = this.getCollection(collectionName);
+        const collection = this.get(collectionName);
         collection.insert(entity);
         entity.linkTo(collectionName);
     }
 
     public removeEntityFrom(entity: Entity, collectionName: string): void {
-        const collection = this.getCollection(collectionName);
+        const collection = this.get(collectionName);
         collection.remove(entity);
         entity.unlinkFrom(collectionName);
     }
@@ -62,7 +62,7 @@ export class CollectionManager {
 
     public flushRemoved(): void {
         for (const entity of this.toRemove) {
-            for (const collectionName of entity.getCollections()) {
+            for (const collectionName of entity.gets()) {
                 this.removeEntityFrom(entity, collectionName);
             }
         }

@@ -1,5 +1,5 @@
 import { EntityFactory }    from "../../entity/EntityFactory.js";
-import { PrototypeSchema } from "../../types/PrototypeSchema.js";
+import { PrototypeSchema } from "../../entity/PrototypeSchema.js";
 import { Entity }           from "../../entity/Entity.js";
 
 describe("EntityFactory.copyFromPrototype()", () => {
