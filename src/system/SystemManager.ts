@@ -1,9 +1,12 @@
+import { Kerno } from "../Kerno.js";
 import { System } from "./System.js";
 
 export class SystemManager {
 
     private systems : Map<string,System> = new Map();
     private executionList :System[] = [];
+
+    constructor( private __kerno : Kerno ){}
 
     /**
      * @description Executes all systems sequentially. 
@@ -18,10 +21,10 @@ export class SystemManager {
      * @param system An instance of 'System'
      * @returns 
      */
-    public use(system : System) : boolean {
-        const systemName :string = system.constructor.name;
+    public use(Ctor : new (kerno : Kerno) => System) : boolean {
+        const systemName :string = Ctor.name;
 
-        if(!(system instanceof System)){
+        if(!(Ctor.prototype instanceof System)){
             throw new Error("Expected instance of 'System'");
         }
 
@@ -30,6 +33,7 @@ export class SystemManager {
             return false;
         }
 
+        const system = new Ctor(this.__kerno);
         this.systems.set(systemName, system);
         this.executionList.push(system);
 
@@ -49,7 +53,7 @@ export class SystemManager {
         this.executionList = this.executionList.filter(s => s !== system);
     }
 
-    public getSystem(systemName : string) : System | undefined {
-        return this.systems.get(systemName);
+    public get<T extends System>(systemName : string) : T | undefined {
+        return this.systems.get(systemName) as T;
     }
 }

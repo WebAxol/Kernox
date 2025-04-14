@@ -1,10 +1,10 @@
 import { Kerno } from "../Kerno.js";
 
 export class System {
-    private paused : boolean = false;
+    protected paused : boolean = false;
     
     constructor(
-        private kerno : Kerno
+        protected __kerno : Kerno
     ){}
 
     public execute(){}
