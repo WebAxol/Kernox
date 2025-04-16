@@ -1,4 +1,5 @@
 import { Kerno } from "../Kerno.js";
+import { isSubclassOf } from "../utils/isSubclassOf.js";
 import { System } from "./System.js";
 
 export class SystemManager {
@@ -21,10 +22,11 @@ export class SystemManager {
      * @param system An instance of 'System'
      * @returns 
      */
-    public use(Ctor : new (kerno : Kerno) => System) : boolean {
-        const systemName :string = Ctor.name;
+    public use(Ctor : new (kerno : Kerno) => System, namespace :  string = '') : boolean {
+        
+        const systemName = namespace ? `${namespace}.${Ctor.name}` : Ctor.name;
 
-        if(!(Ctor.prototype instanceof System)){
+        if(!isSubclassOf(Ctor, System)){
             throw new Error("Expected instance of 'System'");
         }
 
