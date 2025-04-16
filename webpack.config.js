@@ -6,10 +6,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
 export default  {
-    entry : './src/World.js',
+    entry : './lib/Kernox.js',
     output: {
         path : path.resolve(__dirname,'dist'),
-        filename : 'pluglight.min.js'
+        filename : 'Kernox.min.js'
     },
     module : {
         rules : [
@@ -22,8 +22,11 @@ export default  {
             }
         ]
     },
+    resolve: {
+        extensions: ['.ts', '.js'],
+    },
     optimization : {
         minimize  : true,
         minimizer : [new TerserPlugin()] 
-    }
+    },
 }
