@@ -1,5 +1,4 @@
-import { Kerno } from "../Kerno.js";
-import { System } from "../system/System.js";
+import { Kerno }           from "../Kerno.js";
 
 type EventHandler = (event: any) => void;
 
@@ -16,7 +15,7 @@ export class EventBroker{
      */
     public dispatch(eventName: string, detail?: any): boolean {
 
-        const listeners = this.listeners[eventName];
+        const listeners = this.listeners[eventName] || this.resolveImplicitNamespace(eventName);
 
         if(!listeners) return false;
 
@@ -30,7 +29,8 @@ export class EventBroker{
      * @param eventName The event to listen to.
      * @param systemName Optional system identifier.
      */
-    public subscribe(eventName: string, systemName: string): boolean {
+    public subscribe(eventName: string, systemName: string, namespace :  string = ''): boolean {
+        
         const system = this.__kerno.systemManager.get(systemName);
 
         if(!eventName || typeof eventName != "string"){
@@ -41,9 +41,36 @@ export class EventBroker{
             throw new Error(`[EventManager] system '${systemName}' not found.`);
         }
 
-        const methodName = `on${eventName}`;
-        if (typeof system[methodName] !== 'function') {
-            throw new Error(`[EventManager] '${systemName}' does not implement '${methodName}'`);
+        
+        const splittedEventName = eventName.split("."); 
+
+        if(splittedEventName.length == 2){ 
+            [ namespace, eventName ] = splittedEventName;
+        }
+        const baseMethodName = `on${eventName}`;
+        const fullMethodName = (namespace ? namespace + "_" : "") + baseMethodName;
+        const fullEventName  = namespace ? `${namespace}.${eventName}` : eventName;
+
+        console.log(fullMethodName, system[fullMethodName]);
+
+        var methodName :string;
+
+        if(baseMethodName !== fullMethodName && typeof system[fullMethodName] === 'function' && typeof system[baseMethodName] === 'function') {
+            throw new Error(`[EventManager] '${systemName}' has duplicated handler methods for event ${eventName}'`);
+        }
+
+        if (typeof system[fullMethodName] !== 'function' && typeof system[baseMethodName] !== 'function') {
+            throw new Error(`[EventManager] '${systemName}' does not implement a handler method for event ${eventName}`);
+        }
+        else if(typeof system[fullMethodName] === 'function'){
+            methodName = fullMethodName;
+        }
+        else{
+            const ambiguity = this.lookForAmbiguity(eventName);
+            if(ambiguity){ 
+                throw new Error(`[EventManager] '${systemName}' implements '${baseMethodName}', which is ambiguous, please implement '${fullMethodName}' instead.`);
+            }
+            methodName = baseMethodName;
         }
 
         const handlerFn: EventHandler = (detail) => {
@@ -51,12 +78,38 @@ export class EventBroker{
         };
 
     
-        if(!this.listeners[eventName]) this.listeners[eventName] = new Set();
+        if(!this.listeners[fullEventName]) this.listeners[fullEventName] = new Set();
 
-        const listeners :Set<Function> = this.listeners[eventName];
-
-        listeners.add(handlerFn);
+        this.listeners[fullEventName].add(handlerFn);
 
         return true;
+    }
+
+    private lookForAmbiguity(eventName : string) : boolean {
+        const namespaces = this.__kerno.addonLoader.namespaces;
+        let resource;
+
+        for(const namespace of namespaces){
+            resource = this.listeners[`${namespace}.${eventName}`];
+            if(resource) return true;
+        }
+
+        return false;
+    }
+
+    private resolveImplicitNamespace(eventName : string) : string | undefined {
+        const namespaces = this.__kerno.addonLoader.namespaces;
+        
+        var resolved, resource;
+
+        for(const namespace of namespaces){
+            resource = this.listeners[`${namespace}.${eventName}`];
+            if(resource && !resolved) resolved = resource;
+            else if(resource){ 
+                throw new Error(`Ambiguous event '${eventName}' was requested: a namespace must be specified before it ( Ex. namespace.eventName ).`);
+            }
+        }
+
+        return resolved;
     }
 }

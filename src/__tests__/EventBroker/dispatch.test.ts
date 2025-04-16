@@ -8,14 +8,35 @@ var receptor;
 
 class ImplementedSystem extends System {
     ongenericEvent(event){
-        receptor = event;
+        receptor = { handler : "ImplementedSystem", data : event };;
     }
 }
 
-app.systemManager.use(ImplementedSystem);
-app.eventBroker.subscribe("genericEvent","ImplementedSystem")
+class PlayerMovementSystem extends System {
+    physics_oninput(event){
+        receptor = { handler : "PlayerMovement", data : event };
+    }
+}
 
-describe("EventBroker.dispatch()", () => {
+class HudUpdaterSystem extends System {
+    hud_oninput(event){
+        receptor = { handler : "HudUpdaterSystem", data : event };;
+    }
+};
+
+app.addonLoader.use({ name : "physics" });
+app.addonLoader.use({ name : "hud" });
+
+app.systemManager.use(ImplementedSystem);
+app.systemManager.use(PlayerMovementSystem);
+app.systemManager.use(HudUpdaterSystem);
+
+app.eventBroker.subscribe("genericEvent","ImplementedSystem");
+app.eventBroker.subscribe("physics.input","PlayerMovementSystem");
+app.eventBroker.subscribe("hud.input","HudUpdaterSystem");
+
+
+describe("EventBroker.dispatch() with no polimorphism (no two contextually separated events share the same name)", () => {
 
     var eventName, details;
     const func = () => { app.eventBroker.dispatch(eventName,details) };
@@ -24,6 +45,7 @@ describe("EventBroker.dispatch()", () => {
         eventName = "genericEvent";
         details = { data : "Hello world" }
         expect(func).not.toThrow();
-        expect(receptor).toEqual(details);
+        expect(receptor.handler).toBe("ImplementedSystem");
+        expect(receptor.data).toEqual(details);
     });
 });
