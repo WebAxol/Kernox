@@ -13,11 +13,11 @@ export class Entity {
         private __TYPE :string,
     ){}
 
-    public get getID() : string {
+    public get id() : string {
         return this.__ID;
     }
 
-    public get getType() : string {
+    public get type() : string {
         return this.__TYPE;
     }
 
@@ -25,7 +25,7 @@ export class Entity {
         return this.__collections.has(collectionName);
     }
 
-    public gets() : Set<string> {
+    public collections() : Set<string> {
         return this.__collections;
     }
 

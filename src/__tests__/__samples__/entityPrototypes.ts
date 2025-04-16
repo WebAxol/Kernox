@@ -28,7 +28,7 @@ export const kineticPrototype : PrototypeSchema<Kinetic> = {
         acceleration : { x : 0, y : 0 }
     } as Kinetic,
     inherits : [ spatialPrototype ],
-    collections : new Set([ "kinetics" ])
+    collections : new Set([ "Kinetics" ])
 };
 
 interface Circle extends Entity {
@@ -42,7 +42,7 @@ export const circlePrototype : PrototypeSchema<Circle> = {
         position : { x : 0, y : 0 },
         radius : 1,
     } as Circle,
-    collections : new Set([ "circles" ])
+    collections : new Set([ "Circles" ])
 };
 
 interface Enemy extends Circle, Kinetic {
@@ -62,5 +62,40 @@ export const enemyPrototype : PrototypeSchema<Enemy> = {
         kineticPrototype, 
         circlePrototype
     ],
-    collections : new Set([ "enemies" ])
+    collections : new Set([ "Enemies" ])
 }
+
+interface Player extends Circle, Kinetic {
+    lifes : number,
+    score : number,
+    hp    : number    
+};
+
+export const playerPrototype : PrototypeSchema<Player> = {
+    name : "Player",
+    attributes : {
+        lifes : 3,
+        score : 0,
+        hp  : 100
+    } as Player,
+    inherits : [ 
+        kineticPrototype,
+        circlePrototype 
+    ]
+};
+
+interface Corpse extends Circle, Spatial{
+    loot : [];
+};
+
+export const corpsePrototype : PrototypeSchema<Corpse> = {
+    name : "Corpse",
+    attributes : {
+        loot : []
+    } as Corpse,
+    inherits : [
+        spatialPrototype,
+        circlePrototype
+    ],
+    collections : new Set([ "Dead" ])
+};

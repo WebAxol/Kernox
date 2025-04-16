@@ -1,5 +1,6 @@
 import { PrototypeSchema } from "./PrototypeSchema.js";
 import { Entity } from "./Entity.js";
+import { Kerno } from "../Kerno.js";
 
 export class EntityFactory{
     
@@ -7,13 +8,17 @@ export class EntityFactory{
     private pools :Map<string,[]> = new Map();
     private nextID : number = 0;
    
-    public prototype(prototype : PrototypeSchema<any>) : void {
+    constructor( private __kerno : Kerno ){}
 
-        const { name, inherits } = prototype;
+    public prototype(prototype : PrototypeSchema<any>, namespace :  string = '') : void {
+
+        const name = namespace ? `${namespace}.${prototype.name}` : prototype.name;
 
         if(this.types.has(name)) throw Error(`The type named '${name}' has already been registered`);
         
         // Inherit attributes and collections from parent types
+
+        const { inherits } = prototype;
 
         if(inherits){
 
@@ -57,7 +62,7 @@ export class EntityFactory{
 
     public create(type : string, params : object) : Entity {
 
-        const prototype : PrototypeSchema<any> | undefined = this.types.get(type);
+        const prototype : PrototypeSchema<any> | undefined = this.types.get(type) || this.resolveImplicitNamespace(type);
 
         if(!prototype){ 
             throw Error(`Cannot create entity of null type '${type}'`);
@@ -68,7 +73,7 @@ export class EntityFactory{
         this.copyFromPrototype(entity, prototype);
 
         for(const param of Object.keys(params)){
-            entity[param] = params[param];
+            if(param in entity && !param.includes("_")) entity[param] = params[param];
         }
 
         for(const collection of (prototype.collections || [])){
@@ -85,6 +90,20 @@ export class EntityFactory{
 
     public sendToRest(entity : Entity) : void {
         
+    }
+
+    private resolveImplicitNamespace(type : string) : PrototypeSchema<any> | undefined {
+        const namespaces = this.__kerno.addonLoader.namespaces;
+        
+        var resolved, resource;
+
+        for(const namespace of namespaces){
+            resource = this.types[`${namespace}.${type}`];
+            if(resource && !resolved) resolved = resource;
+            else if(resource) throw new Error(`Ambiguous entity type '${type}' was requested: a namespace must be specified before it ( Ex. namespace.type ).`);
+        }
+
+        return resolved;
     }
 
     private deepAssign(recipient : Object, prototype : any, seen = new WeakMap()) : void {

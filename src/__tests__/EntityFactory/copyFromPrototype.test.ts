@@ -1,10 +1,11 @@
 import { EntityFactory }    from "../../entity/EntityFactory.js";
 import { PrototypeSchema } from "../../entity/PrototypeSchema.js";
 import { Entity }           from "../../entity/Entity.js";
+import { Kerno } from "../../Kerno.js";
 
 describe("EntityFactory.copyFromPrototype()", () => {
 
-    const entityFactory = new EntityFactory();
+    const entityFactory = new EntityFactory(new Kerno());
 
     class Item {
         constructor(
