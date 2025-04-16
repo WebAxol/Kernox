@@ -9,7 +9,7 @@ export default  {
     entry : './lib/Kernox.js',
     output: {
         path : path.resolve(__dirname,'dist'),
-        filename : 'Kernox.min.js'
+        filename : 'kernox.min.js'
     },
     module : {
         rules : [
