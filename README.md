@@ -1,13 +1,11 @@
 <div align="center">
 <pre>
-dP     dP                                        oo          
-88   .d8'                                                    
-88aaa8P'  .d8888b. 88d888b. 88d888b. .d8888b.    dP .d8888b. 
-88   `8b. 88ooood8 88'  `88 88'  `88 88'  `88    88 Y8ooooo. 
-88     88 88.  ... 88       88    88 88.  .88 dP 88       88 
-dP     dP `88888P' dP       dP    dP `88888P' 88 88 `88888P' 
-                                                 88          
-                                      dP
+dP     dP                                              
+88   .d8'                                              
+88aaa8P'  .d8888b. 88d888b. 88d888b. .d8888b. dP.  .dP 
+88   `8b. 88ooood8 88'  `88 88'  `88 88'  `88  `8bd8'  
+88     88 88.  ... 88       88    88 88.  .88  .d88b.  
+dP     dP `88888P' dP       dP    dP `88888P' dP'  `dP
 
 ----------------------------------------------------------------------
 **Entity-Component-System-based JavaScript framework for real-time applications** 
