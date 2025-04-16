@@ -1,17 +1,14 @@
 <div align="center">
 <pre>
-OooOOo.   o               o                o           OooOoo .oOOOo.  
-O     `O O               O       o        O                O  o     o  
-o      O o               o                o      O         o  O.       
-O     .o O               o                O     oOo        O   `OOoo.  
-oOooOO'  o  O   o  .oOoO O       O  .oOoO OoOo.  o         o        `O 
-o        O  o   O  o   O O       o  o   O o   o  O         O         o 
-O        o  O   o  O   o o     . O  O   o o   O  o   O     o  O.    .O 
-o'       Oo `OoO'o `OoOo OOoOooO o' `OoOo O   o  `oO `OooOO'   `oooO'  
-                       O                O                              
-                    OoO'             OoO'                              
-----------------------------------------------------------------------------
-**Data-driven light-weight JavaScript framework for real-time applications** 
+dP     dP                                     
+88   .d8'                                     
+88aaa8P'  .d8888b. 88d888b. 88d888b. .d8888b. 
+88   `8b. 88ooood8 88'  `88 88'  `88 88'  `88 
+88     88 88.  ... 88       88    88 88.  .88 
+dP     dP `88888P' dP       dP    dP `88888P'
+
+----------------------------------------------------------------------
+**Entity-Component-System-based JavaScript framework for real-time applications** 
 </pre>
 </div>
 
@@ -22,116 +19,204 @@ o'       Oo `OoO'o `OoOo OOoOooO o' `OoOo O   o  `oO `OooOO'   `oooO'
                                                 
 <h2><b>Introduction</b></h2>
 <p>
-  <b>PlugLightJS</b> is a simple javascript framework designed to build data-driven applications with a modular approach easily. Its architecture was inspired by an    existing framework called <a href="https://github.com/ecsyjs/ecsy">ECSY.js</a>; I decided to make my framework, to gain more control of some design aspects like event management and object construction and allocation.
+  <b style="color: violet">Kerno</b> is a simple javascript <b style="color: white">framework</b> designed to build highly decoupled <b style="color: white">real-time</b> applications. Inspired on the Entity-Component-System architecture, Kerno lets you define <b style="color: white">entities</b> based on <b style="color: white">prototypes</b> with multi-inheritance, allocated within collections and processed by specialized classes called <b style="color: white">Systems</b>, which communicate using events dispatched by an <b style="color: white">event broker</b>.
 </p>
 <h2>Usage</h2>
 
-```js
-//  First, create a 'World' instance: the top-level class that controls the framework components
+First, create a 'Kerno' instance: the top-level class that controls the framework components.
 
-const world = new World()
+```ts
+// Example path : app.ts
+
+import { Kerno       }   from "../Kerno.js";
+import { KernoAddon  }   from "./../addon/KernoAddon.js";
+
+// Recommended setup structure:
+
+import { prototypes  }   from "./setup/prototypes.js";
+import { listeners   }   from "./setup/listeners.js";
+import { systems     }   from "./setup/systems.js";
+import { collections }   from "./setup/collections.js";
+
+// Resource bundler (Addon)
+
+const demoApp : KernoAddon = {
+    name : "demoApp",
+    prototypes,
+    systems,
+    collections,
+    listeners
+};
+
+// Instantiate Kerno, setup addons, and run
+
+const app = new Kerno();
+
+app.use(demoApp);
+app.execute();
 ```
-### Create Services
+### Create Prototypes
+
+```ts
+// Example path : setup/prototypes.ts
+
+import { PrototypeSchema, Entity } from 'kerno';
+
+type Vector2D = { x : number, y : number };
+
+// Define prototype "Kinetic"
+
+interface Kinetic extends Entity {
+  position : Vector2D;
+  velocity : Vector2D;
+};
+
+const kineticPrototype : PrototypeSchema<Kinetic> = {
+  name : "Kinetic",
+  attributes : {
+    position : { x : 0, y : 0 },
+    velocity : { x : 0, y : 0 }
+  } as Kinetic,
+
+  collections : new Set([ "Kinetics" ]) 
+};
+
+// Define prototype "Sprite"
+
+interface Sprite extends Entity {
+  position   : Vector2D;
+  dimensions : Vector2D;
+  url : string;
+};
+
+const spritePrototype : PrototypeSchema<Sprite> = {
+  name : "Sprite",
+  attributes : {
+    position : { x : 0, y : 0 },
+    dimensions : { x : 1, y : 1 },
+    url : "../assets/default.png"
+  },
+  collections : new Set([ "Renderables" ])
+};
+
+// Define prototype "Player"
+
+interface Player extends Kinetic, Sprite {
+  hp : number;
+  level : number;
+  active : boolean;
+};
+
+const playerPrototype : PrototypeSchema<Player> = {
+  name : "Player",
+  attributes : {
+    hp : 20,
+    level : 1,
+    active : false
+  } as Player,
+  
+  collection : new Set([ "Players" ]),
+  
+  // Multiple inheritance:
+
+  inherits : [ 
+    kineticPrototype,
+    spritePrototype 
+  ]
+};
+
+export const prototypes = [ kineticPrototype, playerPrototype ];
+```
+
+### Define collections
+
+
+```ts
+// Example path : setup/collections.ts
+
+import { LinearCollection } from 'kerno';
+
+class Kinetics     extends LinearCollection {};
+class Renderables  extends LinearCollection {};
+class Players      extends LinearCollection {};
+
+export const collections = [ Kinetics, Renderables, Players ];
+```
 
 <p>Services contain code that is executed every frame by the World class. They are implemented as 'Service' sub-classes</p>
 
-```js
-import { Service } from 'pluglightjs'; // You may need to import the Service class
-```
+```ts
+// Example path : setup/systems.ts
 
-```js
+import { System, LinearCollection } from 'kerno';
 
-// Make a 'Service' sub-class: you can add custom methods and attributes
-
-class ExampleService extends Service{
-
-  constructor(){
-    super();
-    // etc...
-  }
-
-  execute(){
-   // Your code!
-  }
-}
-
-// Then, register your service ( service name, service instance )
-
-world.registerService('exampleService', new ExampleServiceA());
-
-```
-
-### Create Events
-
-<p>Here are the main functions to work with events in pljs:</p>
-
-```js
-world.registerEvent('eventName'); // create event
-```
-
-```js
-world.registerServiceToEvent('serviceName','eventName'); // make service an event listener
-```
-
-```js
-world.notifyEvent('eventName', { info : 'eventInfo' }); // emit event
-```
-
-<p>Lets implement that with a brief example:</p>
-
-
-```js
-
-class EventEmitter extends Service{
-
-    constructor(){
-        super();
-        // etc...
-    }
-
-    execute(){
-
-        // Emit event
-        
-        this.world.notifyEvent('exampleEvent');
-    }
-}
-
-class EventReceiver extends Service{
-
-    constructor(){
-        super();
-        // etc...
-    }
+class MovementSystem extends System {
   
-    // event-handler class (on + event name)
+  private kinetics : LinearCollection = new LinearCollection(); // Dummy instance
 
-    onexampleEvent(){
-        console.log('event received');
-    }
+  public init(){
+    // Dependancy injection during application setup
+    this.kinetics = this.__kerno.collectionManager.get("Kinetics");
+  }
+
+  public execute(){
+    // Called each frame
+    this.kinetics.iterate((entity : any) => {
+      entity.position.x += entity.velocity.x;
+      entity.position.y += entity.velocity.y;
+    });
+  }
 }
 
-world.registerEvent('exampleEvent');
 
-world.registerService('emitter' , new EventEmitter());
-world.registerService('receiver', new EventReceiver());
+class PlayerInputSystem extends System {
 
-world.registerServiceToEvent('receiver','exampleEvent');
+  private active : Player = {} as Player;
 
+  private command_KeyMap = {
+        w : () => { this.active.position.x -= 1 },
+        s : () => { this.active.position.x += 1 },
+        a : () => { this.active.position.x -= 1 },
+        d : () => { this.active.position.x += 1 },
+  };
+
+  private keys = {
+      w : false,
+      s : false,
+      d : false,
+      a : false
+  };
+
+  public init(){
+    // Define event listeners to handle player inputs
+    window.addEventListener('keydown',  (e) => { this.keydown(e) });
+    window.addEventListener('keyup',    (e) => { this.keyup(e)   });
+  }
+
+  public execute(){
+    // Called each frame
+    const keys = Object.keys(this.control);
+    keys.forEach((key) => { 
+      if(this.control[key] === true){ this.command_KeyMap[key](); }
+    });   
+  }
+
+  private keydown(info){
+    if(this.control[info.key] !== undefined) this.control[info.key] = true;
+  }
+
+  private keyup(info){
+    if(this.control[info.key] !== undefined) this.control[info.key] = false;
+  }
+}
+
+export const systems = [ MovementSystem, PlayerInputSystem ];
 ```
 
-### Framework Execution
-
-```js
-world.execute();    
-```
-```js
-world.pauseExecution();
-```
 <hr>
 <h3>Contribute</h3>
 
 ```sh
-git clone https://github.com/WebAxol/PlugLightJS
+git clone https://github.com/WebAxol/Kerno.git
 ```
 
