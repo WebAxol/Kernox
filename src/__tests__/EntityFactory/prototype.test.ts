@@ -1,8 +1,8 @@
 import { EntityFactory } from "../../entity/EntityFactory.js";
 import { enemyPrototype, circlePrototype, spatialPrototype,kineticPrototype } from "../__samples__/entityPrototypes.js";
-import { Kerno } from "../../Kerno.js";
+import { Kernox } from "../../Kernox.js";
 
-const entityFactory = new EntityFactory(new Kerno());
+const entityFactory = new EntityFactory(new Kernox());
 
 describe("EntityFactory.prototype()", () => {
 

@@ -1,8 +1,8 @@
 import { CollectionManager } from "../../collection/CollectionManager.js";
 import { LinearCollection } from "../../collection/LinearCollection.js";
-import { Kerno } from "../../Kerno.js";
+import { Kernox } from "../../Kernox.js";
 
-const collectionManager = new CollectionManager(new Kerno());
+const collectionManager = new CollectionManager(new Kernox());
 
 class Dogs extends LinearCollection {};
 

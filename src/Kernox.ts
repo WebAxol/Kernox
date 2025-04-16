@@ -1,11 +1,11 @@
 import { AddonLoader } from "./addon/AddonLoader.js";
-import { KernoAddon } from "./addon/KernoAddon.js";
+import { KernoAddon } from "./addon/KernoxAddon.js";
 import { CollectionManager } from "./collection/CollectionManager.js";
 import { EntityFactory } from "./entity/EntityFactory.js";
 import { EventBroker } from "./event/EventBroker.js";
 import { SystemManager } from "./system/SystemManager.js";
 
-export class Kerno {
+export class Kernox {
 
     private __entityFactory     = new EntityFactory(this);
     private __collectionManager = new CollectionManager(this);
@@ -17,7 +17,7 @@ export class Kerno {
     private paused = false;
     
     /**
-     * Kerno's top-level method, it starts the execution loop triggering subordinate systems.
+     * Kernox's top-level method, it starts the execution loop triggering subordinate systems.
      */
     public execute() : void {
 

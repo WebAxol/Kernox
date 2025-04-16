@@ -1,4 +1,4 @@
-import { Kerno }           from "../Kerno.js";
+import { Kernox }           from "../Kernox.js";
 
 type EventHandler = (event: any) => void;
 
@@ -6,7 +6,7 @@ export class EventBroker{
 
     private listeners : Map<string,Set<Function>> = new Map();
 
-    constructor( private __kerno : Kerno ){}
+    constructor( private __kernox : Kernox ){}
 
     /**
      * Dispatches a native custom event.
@@ -31,7 +31,7 @@ export class EventBroker{
      */
     public subscribe(eventName: string, systemName: string, namespace :  string = ''): boolean {
         
-        const system = this.__kerno.systemManager.get(systemName);
+        const system = this.__kernox.systemManager.get(systemName);
 
         if(!eventName || typeof eventName != "string"){
             throw new Error(`[EventManager] invalid event name provided: it must be a non-empty string`);
@@ -86,7 +86,7 @@ export class EventBroker{
     }
 
     private lookForAmbiguity(eventName : string) : boolean {
-        const namespaces = this.__kerno.addonLoader.namespaces;
+        const namespaces = this.__kernox.addonLoader.namespaces;
         let resource;
 
         for(const namespace of namespaces){
@@ -98,7 +98,7 @@ export class EventBroker{
     }
 
     private resolveImplicitNamespace(eventName : string) : string | undefined {
-        const namespaces = this.__kerno.addonLoader.namespaces;
+        const namespaces = this.__kernox.addonLoader.namespaces;
         
         var resolved, resource;
 

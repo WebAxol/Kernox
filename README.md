@@ -1,11 +1,13 @@
 <div align="center">
 <pre>
-dP     dP                                     
-88   .d8'                                     
-88aaa8P'  .d8888b. 88d888b. 88d888b. .d8888b. 
-88   `8b. 88ooood8 88'  `88 88'  `88 88'  `88 
-88     88 88.  ... 88       88    88 88.  .88 
-dP     dP `88888P' dP       dP    dP `88888P'
+dP     dP                                        oo          
+88   .d8'                                                    
+88aaa8P'  .d8888b. 88d888b. 88d888b. .d8888b.    dP .d8888b. 
+88   `8b. 88ooood8 88'  `88 88'  `88 88'  `88    88 Y8ooooo. 
+88     88 88.  ... 88       88    88 88.  .88 dP 88       88 
+dP     dP `88888P' dP       dP    dP `88888P' 88 88 `88888P' 
+                                                 88          
+                                      dP
 
 ----------------------------------------------------------------------
 **Entity-Component-System-based JavaScript framework for real-time applications** 
@@ -19,17 +21,16 @@ dP     dP `88888P' dP       dP    dP `88888P'
                                                 
 <h2><b>Introduction</b></h2>
 <p>
-  <b style="color: violet">Kerno</b> is a simple javascript <b style="color: white">framework</b> designed to build highly decoupled <b style="color: white">real-time</b> applications. Inspired on the Entity-Component-System architecture, Kerno lets you define <b style="color: white">entities</b> based on <b style="color: white">prototypes</b> with multi-inheritance, allocated within collections and processed by specialized classes called <b style="color: white">Systems</b>, which communicate using events dispatched by an <b style="color: white">event broker</b>.
+  <b style="color: violet">Kernox</b> is a simple javascript <b style="color: white">framework</b> designed to build highly decoupled <b style="color: white">real-time</b> applications. Inspired on the Entity-Component-System architecture, Kernox lets you define <b style="color: white">entities</b> based on <b style="color: white">prototypes</b> with multi-inheritance, allocated within collections and processed by specialized classes called <b style="color: white">Systems</b>, which communicate using events dispatched by an <b style="color: white">event broker</b>.
 </p>
 <h2>Usage</h2>
 
-First, create a 'Kerno' instance: the top-level class that controls the framework components.
+First, create a 'Kernox' instance: the top-level class that controls the framework components.
 
 ```ts
 // Example path : app.ts
 
-import { Kerno       }   from "../Kerno.js";
-import { KernoAddon  }   from "./../addon/KernoAddon.js";
+import { Kernox, KernoAddon }   from "Kernox";
 
 // Recommended setup structure:
 
@@ -48,9 +49,9 @@ const demoApp : KernoAddon = {
     listeners
 };
 
-// Instantiate Kerno, setup addons, and run
+// Instantiate Kernox, setup addons, and run
 
-const app = new Kerno();
+const app = new Kernox();
 
 app.use(demoApp);
 app.execute();
@@ -60,7 +61,7 @@ app.execute();
 ```ts
 // Example path : setup/prototypes.ts
 
-import { PrototypeSchema, Entity } from 'kerno';
+import { PrototypeSchema, Entity } from 'Kernox';
 
 type Vector2D = { x : number, y : number };
 
@@ -134,7 +135,7 @@ export const prototypes = [ kineticPrototype, playerPrototype ];
 ```ts
 // Example path : setup/collections.ts
 
-import { LinearCollection } from 'kerno';
+import { LinearCollection } from 'Kernox';
 
 class Kinetics     extends LinearCollection {};
 class Renderables  extends LinearCollection {};
@@ -148,7 +149,7 @@ export const collections = [ Kinetics, Renderables, Players ];
 ```ts
 // Example path : setup/systems.ts
 
-import { System, LinearCollection } from 'kerno';
+import { System, LinearCollection } from 'Kernox';
 
 class MovementSystem extends System {
   
@@ -156,7 +157,7 @@ class MovementSystem extends System {
 
   public init(){
     // Dependancy injection during application setup
-    this.kinetics = this.__kerno.collectionManager.get("Kinetics");
+    this.kinetics = this.__kernox.collectionManager.get("Kinetics");
   }
 
   public execute(){
@@ -217,6 +218,6 @@ export const systems = [ MovementSystem, PlayerInputSystem ];
 <h3>Contribute</h3>
 
 ```sh
-git clone https://github.com/WebAxol/Kerno.git
+git clone https://github.com/WebAxol/Kernox.git
 ```
 

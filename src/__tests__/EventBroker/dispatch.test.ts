@@ -1,8 +1,8 @@
 import { EventBroker } from "../../event/EventBroker.js";
-import { Kerno } from "../../Kerno.js";
+import { Kernox } from "../../Kernox.js";
 import { System } from "../../system/System.js";
 
-const app = new Kerno();
+const app = new Kernox();
 
 var receptor;
 

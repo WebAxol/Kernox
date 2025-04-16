@@ -1,4 +1,4 @@
-import { Kerno } from "../Kerno.js";
+import { Kernox } from "../Kernox.js";
 import { isSubclassOf } from "../utils/isSubclassOf.js";
 import { System } from "./System.js";
 
@@ -7,7 +7,7 @@ export class SystemManager {
     private systems : Map<string,System> = new Map();
     private executionList :System[] = [];
 
-    constructor( private __kerno : Kerno ){}
+    constructor( private __kernox : Kernox ){}
 
     /**
      * @description Executes all systems sequentially. 
@@ -22,7 +22,7 @@ export class SystemManager {
      * @param system An instance of 'System'
      * @returns 
      */
-    public use(Ctor : new (kerno : Kerno) => System, namespace :  string = '') : boolean {
+    public use(Ctor : new (kernox : Kernox) => System, namespace :  string = '') : boolean {
         
         const systemName = namespace ? `${namespace}.${Ctor.name}` : Ctor.name;
 
@@ -35,7 +35,7 @@ export class SystemManager {
             return false;
         }
 
-        const system = new Ctor(this.__kerno);
+        const system = new Ctor(this.__kernox);
         this.systems.set(systemName, system);
         this.executionList.push(system);
 

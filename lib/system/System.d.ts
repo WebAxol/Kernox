@@ -1,8 +1,8 @@
-import { Kerno } from "../Kerno.js";
+import { Kernox } from "../Kernox.js";
 export declare class System {
-    protected __kerno: Kerno;
+    protected __kernox: Kernox;
     protected paused: boolean;
-    constructor(__kerno: Kerno);
+    constructor(__kernox: Kernox);
     execute(): void;
     get isPaused(): boolean;
     set setPaused(state: boolean);

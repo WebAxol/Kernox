@@ -1,8 +1,8 @@
-import { Kerno } from "../Kerno.js";
+import { Kernox } from "../Kernox.js";
 export declare class EventBroker {
-    private __kerno;
+    private __kernox;
     private listeners;
-    constructor(__kerno: Kerno);
+    constructor(__kernox: Kernox);
     dispatch(eventName: string, detail?: any): boolean;
     subscribe(eventName: string, systemName: string, namespace?: string): boolean;
     private lookForAmbiguity;

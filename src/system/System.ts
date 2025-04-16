@@ -1,10 +1,10 @@
-import { Kerno } from "../Kerno.js";
+import { Kernox } from "../Kernox.js";
 
 export class System {
     protected paused : boolean = false;
     
     constructor(
-        protected __kerno : Kerno
+        protected __kernox : Kernox
     ){}
 
     public execute(){}

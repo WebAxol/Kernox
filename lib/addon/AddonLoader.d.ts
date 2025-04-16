@@ -1,9 +1,9 @@
-import { Kerno } from "../Kerno.js";
-import { KernoAddon } from "./KernoAddon.js";
+import { Kernox } from "../Kernox.js";
+import { KernoAddon } from "./KernoxAddon.js";
 export declare class AddonLoader {
-    private __kerno;
+    private __kernox;
     private __namespaces;
-    constructor(__kerno: Kerno);
+    constructor(__kernox: Kernox);
     use(addon: KernoAddon): void;
     get namespaces(): Set<string>;
     private registerPrototypes;

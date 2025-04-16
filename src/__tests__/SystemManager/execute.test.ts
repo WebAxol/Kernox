@@ -1,8 +1,8 @@
 import { SystemManager } from "../../system/SystemManager.js";
 import { System } from "../../system/System.js";
-import { Kerno } from "../../Kerno.js";
+import { Kernox } from "../../Kernox.js";
 
-const systemManager = new SystemManager(new Kerno());
+const systemManager = new SystemManager(new Kernox());
 
 var gameState :string, expectedState :string;
 
@@ -26,8 +26,6 @@ class RenderingSystem extends System {
         gameState += "R";
     }
 };
-
-const kerno = new Kerno();
 
 systemManager.use(InputSystem);
 systemManager.use(PhysicsSystem);

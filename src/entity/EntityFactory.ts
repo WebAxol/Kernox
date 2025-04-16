@@ -1,6 +1,6 @@
 import { PrototypeSchema } from "./PrototypeSchema.js";
 import { Entity } from "./Entity.js";
-import { Kerno } from "../Kerno.js";
+import { Kernox } from "../Kernox.js";
 
 export class EntityFactory{
     
@@ -8,7 +8,7 @@ export class EntityFactory{
     private pools :Map<string,[]> = new Map();
     private nextID : number = 0;
    
-    constructor( private __kerno : Kerno ){}
+    constructor( private __kernox : Kernox ){}
 
     public prototype(prototype : PrototypeSchema<any>, namespace :  string = '') : void {
 
@@ -93,7 +93,7 @@ export class EntityFactory{
     }
 
     private resolveImplicitNamespace(type : string) : PrototypeSchema<any> | undefined {
-        const namespaces = this.__kerno.addonLoader.namespaces;
+        const namespaces = this.__kernox.addonLoader.namespaces;
         
         var resolved, resource;
 

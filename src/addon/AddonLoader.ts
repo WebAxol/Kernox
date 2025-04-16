@@ -1,5 +1,5 @@
-import { Kerno } from "../Kerno.js";
-import { KernoAddon } from "./KernoAddon.js";
+import { Kernox } from "../Kernox.js";
+import { KernoAddon } from "./KernoxAddon.js";
 import { PrototypeSchema } from "../entity/PrototypeSchema.js";
 import { AbstractCollection } from "../collection/AbstractCollection.js";
 import { System } from "../system/System.js";
@@ -8,7 +8,7 @@ export class AddonLoader {
 
     private __namespaces : Set<string> = new Set();
 
-    constructor( private __kerno : Kerno ){}
+    constructor( private __kernox : Kernox ){}
 
     public use(addon : KernoAddon){
         
@@ -32,19 +32,19 @@ export class AddonLoader {
 
     private registerPrototypes(prototypes : PrototypeSchema<any>[], namespace : string){
         prototypes.forEach(proto => {
-            this.__kerno.entityFactory.prototype(proto,namespace);
+            this.__kernox.entityFactory.prototype(proto,namespace);
         });
     }
     
     private registerCollections(collections : (new () => AbstractCollection)[], namespace : string){
         collections.forEach(collection => {
-            this.__kerno.collectionManager.use(collection, namespace);
+            this.__kernox.collectionManager.use(collection, namespace);
         });
     }
 
     private registerSystems(services : (new () => System)[], namespace : string){
         services.forEach(service => {
-            this.__kerno.systemManager.use(service, namespace);
+            this.__kernox.systemManager.use(service, namespace);
         });
     }
     
@@ -53,7 +53,7 @@ export class AddonLoader {
 
         events.forEach((event) => {
             const services = listeners[event];
-            services.forEach(service => this.__kerno.eventBroker.subscribe(event,service, namespace) );
+            services.forEach(service => this.__kernox.eventBroker.subscribe(event,service, namespace) );
         });
     }
 }

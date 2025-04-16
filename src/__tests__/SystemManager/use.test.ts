@@ -1,6 +1,6 @@
 import { SystemManager } from "../../system/SystemManager.js";
 import { System }   from "../../system/System.js";
-import { Kerno }    from "../../Kerno.js";
+import { Kernox }    from "../../Kernox.js";
 
 class InputSystem extends System {
 
@@ -12,10 +12,10 @@ class InputSystem extends System {
 describe("SystemManager.use()", () => {
 
     var system, res;
-    const kerno = new Kerno();
+    const kernox = new Kernox();
     const func = () => { 
         res = undefined;
-        res = kerno.systemManager.use(system) 
+        res = kernox.systemManager.use(system) 
     };
 
     it("Must throw an error if 'system' provided is not an instance of 'System'", () => {

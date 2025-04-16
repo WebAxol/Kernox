@@ -2,14 +2,14 @@ import { AbstractCollection } from "./AbstractCollection.js";
 import { Entity } from "../entity/Entity.js";
 import { LinearCollection } from "./LinearCollection.js";
 import { isSubclassOf } from "../utils/isSubclassOf.js";
-import { Kerno } from "../Kerno.js";
+import { Kernox } from "../Kernox.js";
 
 export class CollectionManager {
 
     private collections : Map<string, AbstractCollection> = new Map();
     private toRemove    : Set<Entity> = new Set();
 
-    constructor( private __kerno : Kerno ) {}
+    constructor( private __kernox : Kernox ) {}
 
     public get(collectionName : string) : AbstractCollection {
         const collection = this.collections.get(collectionName) || this.resolveImplicitNamespace(collectionName);
@@ -62,7 +62,7 @@ export class CollectionManager {
     }
 
     private resolveImplicitNamespace(collectionName : string) : AbstractCollection | undefined {
-        const namespaces = this.__kerno.addonLoader.namespaces;
+        const namespaces = this.__kernox.addonLoader.namespaces;
         
         var resolved, resource;
 
