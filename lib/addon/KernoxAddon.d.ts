@@ -1,6 +1,6 @@
-import { PrototypeSchema } from "../entity/PrototypeSchema.js";
-import { AbstractCollection } from "../collection/AbstractCollection.js";
-import { System } from "../system/System.js";
+import { PrototypeSchema } from "../entity/PrototypeSchema";
+import { AbstractCollection } from "../collection/AbstractCollection";
+import { System } from "../system/System";
 export interface KernoAddon {
     name: string;
     prototypes?: PrototypeSchema<any>[];

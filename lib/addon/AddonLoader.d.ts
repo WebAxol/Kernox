@@ -1,5 +1,5 @@
-import { Kernox } from "../Kernox.js";
-import { KernoAddon } from "./KernoxAddon.js";
+import { Kernox } from "../Kernox";
+import { KernoAddon } from "./KernoxAddon";
 export declare class AddonLoader {
     private __kernox;
     private __namespaces;

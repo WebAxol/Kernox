@@ -1,6 +1,6 @@
-import { PrototypeSchema } from "./PrototypeSchema.js";
-import { Entity } from "./Entity.js";
-import { Kernox } from "../Kernox.js";
+import { PrototypeSchema } from "./PrototypeSchema";
+import { Entity } from "./Entity";
+import { Kernox } from "../Kernox";
 export declare class EntityFactory {
     private __kernox;
     private types;

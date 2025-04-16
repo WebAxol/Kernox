@@ -1,5 +1,5 @@
 import { AbstractCollection } from "./AbstractCollection";
-import { Entity } from "../entity/Entity.js";
+import { Entity } from "../entity/Entity";
 export declare class LinearCollection extends AbstractCollection {
     protected readonly entities: Set<Entity>;
     protected __changed: boolean;

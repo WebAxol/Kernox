@@ -1,4 +1,4 @@
-import { Kernox } from "../Kernox.js";
+import { Kernox } from "../Kernox";
 export declare class EventBroker {
     private __kernox;
     private listeners;

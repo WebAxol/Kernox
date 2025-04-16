@@ -1,9 +1,9 @@
-import { AddonLoader } from "./addon/AddonLoader.js";
-import { KernoAddon } from "./addon/KernoxAddon.js";
-import { CollectionManager } from "./collection/CollectionManager.js";
-import { EntityFactory } from "./entity/EntityFactory.js";
-import { EventBroker } from "./event/EventBroker.js";
-import { SystemManager } from "./system/SystemManager.js";
+import { AddonLoader } from "./addon/AddonLoader";
+import { KernoAddon } from "./addon/KernoxAddon";
+import { CollectionManager } from "./collection/CollectionManager";
+import { EntityFactory } from "./entity/EntityFactory";
+import { EventBroker } from "./event/EventBroker";
+import { SystemManager } from "./system/SystemManager";
 export declare class Kernox {
     private __entityFactory;
     private __collectionManager;

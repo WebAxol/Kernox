@@ -1,4 +1,4 @@
-import { Entity } from "../entity/Entity.js";
+import { Entity } from "../entity/Entity";
 export declare abstract class AbstractCollection {
     protected abstract entities: unknown;
     protected abstract __changed: boolean;

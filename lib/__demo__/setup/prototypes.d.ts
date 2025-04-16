@@ -1,0 +1,1 @@
+export declare const prototypes: (import("./src/entity/PrototypeSchema").PrototypeSchema<import("../proto/Armed").Armed> | import("./src/entity/PrototypeSchema").PrototypeSchema<import("../proto/Kinetic").Kinetic>)[];
