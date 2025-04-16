@@ -38,9 +38,9 @@ iterateFiles(directoryPath);
 // Bundle .d.ts files
 
 dts.bundle({
-  name: 'Kernox', 
+  name: 'kernox', 
   main: 'lib/Kernox.d.ts', 
-  out: '../dist/Kernox.d.ts',
+  out: '../dist/kernox.d.ts',
   removeSource: false, 
   outputAsModuleFolder: true,
 });

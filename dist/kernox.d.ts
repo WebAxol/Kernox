@@ -54,7 +54,7 @@ export class EventBroker {
 export class SystemManager {
     constructor(__kernox: Kernox);
     execute(): void;
-    use(Ctor: new (Kernox: Kernox) => System, namespace?: string): boolean;
+    use(Ctor: new (kernox: Kernox) => System, namespace?: string): boolean;
     unuse(systemName: string): void;
     get<T extends System>(systemName: string): T | undefined;
 }
