@@ -1,4 +1,4 @@
-import { PrototypeSchema } from "./PrototypeSchema.js";
+import type { PrototypeSchema } from "./PrototypeSchema.js";
 import { Entity } from "./Entity.js";
 import { Kernox } from "../Kernox.js";
 

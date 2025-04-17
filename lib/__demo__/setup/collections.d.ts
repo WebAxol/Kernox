@@ -1,5 +1,5 @@
-import { LinearCollection } from "../../collection/LinearCollection";
-declare class Players extends LinearCollection {
+import { LinearCollection } from '../../../dist/kernox.js';
+declare class Kinetics extends LinearCollection {
 }
-export declare const collections: (typeof Players)[];
+export declare const collections: (typeof Kinetics)[];
 export {};

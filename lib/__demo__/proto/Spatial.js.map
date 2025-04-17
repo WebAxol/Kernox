@@ -1,1 +1,0 @@
-{"version":3,"file":"Spatial.js","sourceRoot":"","sources":["../../../src/__demo__/proto/Spatial.ts"],"names":[],"mappings":"AAMC,CAAC;AAEF,MAAM,CAAC,MAAM,gBAAgB,GAA8B;IACvD,IAAI,EAAG,SAAS;IAChB,UAAU,EAAG;QACT,QAAQ,EAAG,EAAE,CAAC,EAAG,CAAC,EAAE,CAAC,EAAG,CAAC,EAAE;QAC3B,WAAW,EAAG,EAAE,CAAC,EAAG,CAAC,EAAE,CAAC,EAAG,CAAC,EAAE;KACtB;CACf,CAAC"}

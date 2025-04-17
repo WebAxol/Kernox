@@ -49,7 +49,7 @@ describe("SystemManager.execute()", () => {
 
     test("That paused systems are ignored", () => {
         
-        if(physicsSystem) physicsSystem.setPaused = true;
+        if(physicsSystem) physicsSystem.paused = true;
         
         gameState = "";
         expectedState = "";

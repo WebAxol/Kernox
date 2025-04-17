@@ -1,4 +1,4 @@
-import { PrototypeSchema } from "./PrototypeSchema";
+import type { PrototypeSchema } from "./PrototypeSchema";
 import { Entity } from "./Entity";
 import { Kernox } from "../Kernox";
 export declare class EntityFactory {

@@ -1,4 +1,4 @@
-import { Kernox } from "../Kernox";
+import type { Kernox } from "../Kernox";
 import { System } from "./System";
 export declare class SystemManager {
     private __kernox;
@@ -12,10 +12,10 @@ export declare class SystemManager {
     execute(): void;
     /**
      * @description Vinculates a system, so that it's execution method is called on every frame.
-     * @param system An instance of 'System'
-     * @returns
+     * @param system An instance of 'System'.
+     * @returns True if new system is registered, false otherwise.
      */
-    use(Ctor: new (kernox: Kernox) => System, namespace?: string): boolean;
+    use(Ctor: new (kernox: Kernox, context: string) => System, namespace?: string): boolean;
     /**
      * Removes system from the execution list and registry.
      * @param systemName A string corresponding to the class of the system to remove.

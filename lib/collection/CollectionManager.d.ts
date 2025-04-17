@@ -6,7 +6,17 @@ export declare class CollectionManager {
     private collections;
     private toRemove;
     constructor(__kernox: Kernox);
-    get(collectionName: string): AbstractCollection;
+    /**
+     * Searches for a collection by name and retrieves it if found.
+     * @param collectionName Name of collection
+     * @returns
+     */
+    get<T extends AbstractCollection>(collectionName: string): T;
+    /**
+     * Registers new collection based on a constructor; the collection is identified by the name of its parent class.
+     * @param Ctr sub-class of AbstractCollection.
+     * @param namespace Optional parameter used by AddonLoader to specify a context when loading collections from an addon.
+     */
     use(Ctr: new () => AbstractCollection, namespace?: string): void;
     addEntityTo(entity: Entity, collectionName: string): void;
     removeEntityFrom(entity: Entity, collectionName: string): void;

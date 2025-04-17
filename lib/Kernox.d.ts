@@ -5,22 +5,50 @@ import { EntityFactory } from "./entity/EntityFactory";
 import { EventBroker } from "./event/EventBroker";
 import { SystemManager } from "./system/SystemManager";
 import { LinearCollection } from "./collection/LinearCollection";
+/**
+ * Top-level application component: central integration point that handles all resources, including entities,
+ * collections, systems, and events.
+ */
 export declare class Kernox {
     private __entityFactory;
     private __collectionManager;
     private __systemManager;
     private __eventBroker;
     private __addonLoader;
-    private frameCount;
-    private paused;
+    private __frame;
+    private __paused;
     /**
      * Kernox's top-level method, it starts the execution loop triggering subordinate systems.
      */
     execute(): void;
     /**
-     * Integrates an addon: a set of systems, prototypes, collections and event listeners bundled within an object.
-     * @param addon
-     */
+       * Integrates an 'addon' to the application instance, registering and setting up resources.
+       * @param addon Object that packages resources belonging to a context: it can contain a list of systems, collections, event listeners
+       * and entity prototypes, which will be registered.
+       * @example
+       * import { Kernox, KernoAddon } from "../../dist/kernox";
+       
+       const app = new Kernox();
+  
+       // Recommended setup structure:
+       
+       import { prototypes  }   from "./setup/prototypes";
+       import { listeners   }   from "./setup/listeners";
+       import { systems     }   from "./setup/systems";
+       import { collections }   from "./setup/collections";
+       
+       // Resource bundler (Addon)
+       
+       const demoApp : KernoAddon = {
+           name : "demoApp",
+           prototypes,
+           systems,
+           collections,
+           listeners
+       };
+            
+      app.addonLoader.use(demoApp); // << Integrating addon to application
+       */
     use(addon: KernoAddon): void;
     /**
      * Manages the construction and recycling of entities, and can assamble prototypes to define archetypes;
@@ -42,5 +70,6 @@ export declare class Kernox {
     get eventBroker(): EventBroker;
     get addonLoader(): AddonLoader;
     get frame(): number;
+    get paused(): boolean;
 }
 export { LinearCollection };

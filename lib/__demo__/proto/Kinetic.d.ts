@@ -1,13 +1,7 @@
-import { PrototypeSchema } from "../../entity/PrototypeSchema";
-import { Spatial } from "./Spatial";
-export interface Kinetic extends Spatial {
-    velocity: {
-        x: number;
-        y: number;
-    };
-    acceleration: {
-        x: number;
-        y: number;
-    };
+import type { PrototypeSchema, Entity } from "../../../dist/kernox";
+import { Vector2D } from "../utils/Vector2D";
+export interface Kinetic extends Entity {
+    position: Vector2D;
+    velocity: Vector2D;
 }
 export declare const kineticPrototype: PrototypeSchema<Kinetic>;

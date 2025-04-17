@@ -1,5 +1,5 @@
 /**
- * @description: First class citizen object whose attributes can be inherited from n other entity types, can be
+ * First class citizen object whose attributes can be inherited from n other entity types, can be
  * subscribed to entity collections and processed by other functions or class methods. It does not contain behaviour appart from getters and state validators.
  */
 export declare class Entity {
