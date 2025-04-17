@@ -1,4 +1,4 @@
-import { AbstractCollection } from "./AbstractCollection";
+import { AbstractCollection } from "./AbstractCollection.js";
 import { Entity } from "../entity/Entity.js";
 
 export class LinearCollection extends AbstractCollection{

@@ -1,32 +1,27 @@
 import TerserPlugin from "terser-webpack-plugin";
-import { fileURLToPath } from "url";
-import path from "path";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default  {
     entry : './lib/Kernox.js',
     output: {
         path : path.resolve(__dirname,'dist'),
-        filename : 'kernox.min.js'
+        filename : 'kernox.min.js',
+        library: {
+            type: 'module',
+        }
     },
-    module : {
-        rules : [
-            {
-                test : /\.js/,
-                loader  : 'babel-loader',
-                options : {
-                    presets : ['@babel/preset-env']
-                }
-            }
-        ]
-    },
-    resolve: {
-        extensions: ['.ts', '.js'],
+    
+    experiments: {
+        outputModule: true
     },
     optimization : {
         minimize  : true,
-        minimizer : [new TerserPlugin()] 
+        minimizer : [new TerserPlugin()]
     },
+    mode : "production",
 }

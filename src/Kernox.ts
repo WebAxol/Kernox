@@ -4,6 +4,7 @@ import { CollectionManager } from "./collection/CollectionManager.js";
 import { EntityFactory } from "./entity/EntityFactory.js";
 import { EventBroker } from "./event/EventBroker.js";
 import { SystemManager } from "./system/SystemManager.js";
+import { LinearCollection }  from "./collection/LinearCollection.js";
 
 export class Kernox {
 
@@ -15,10 +16,11 @@ export class Kernox {
     
     private frameCount = 0;
     private paused = false;
-    
+
     /**
      * Kernox's top-level method, it starts the execution loop triggering subordinate systems.
      */
+
     public execute() : void {
 
         if(this.paused) return;
@@ -75,3 +77,5 @@ export class Kernox {
         return this.frameCount;
     }
 }
+
+export { LinearCollection };
