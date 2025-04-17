@@ -12,9 +12,20 @@ dP     dP `88888P' dP       dP    dP `88888P' dP'  `dP
 </pre>
 </div>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-
+<p align="center">
+<a href="https://github.com/WebAxol/Kernox/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/WebAxol/Kernox?color=yellow" alt="License: MIT" />
+  </a>
+  <a href="https://www.npmjs.com/package/kernox">
+    <img src="https://img.shields.io/npm/v/kernox?color=crimson&label=npm&logo=npm" alt="npm version" />
+  </a>
+  <a href="https://bundlephobia.com/package/kernox">
+    <img src="https://img.shields.io/bundlephobia/min/kernox" alt="minified size" />
+  </a>
+  <a href="https://bundlephobia.com/package/kernox">
+    <img src="https://img.shields.io/bundlephobia/minzip/kernox" alt="minzipped size" />
+  </a>
+</p>
 
                                                 
 <h2><b>Introduction</b></h2>
