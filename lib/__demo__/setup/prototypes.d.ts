@@ -1,1 +1,1 @@
-export declare const prototypes: (import("./dist/kernox.d.js").PrototypeSchema<import("../proto/Kinetic.js").Kinetic> | import("./dist/kernox.d.js").PrototypeSchema<import("../proto/Sprite.js").Sprite>)[];
+export declare const prototypes: (import("./dist/kernox.d").PrototypeSchema<import("../proto/Kinetic").Kinetic> | import("./dist/kernox.d").PrototypeSchema<import("../proto/Sprite").Sprite>)[];

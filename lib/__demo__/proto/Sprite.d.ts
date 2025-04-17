@@ -1,5 +1,5 @@
-import type { PrototypeSchema, Entity } from "../../../dist/kernox.js";
-import { Vector2D } from "../utils/Vector2D.js";
+import type { PrototypeSchema, Entity } from "../../../dist/kernox";
+import { Vector2D } from "../utils/Vector2D";
 export interface Sprite extends Entity {
     position: Vector2D;
     dimensions: Vector2D;

@@ -1,6 +1,6 @@
-import type { PrototypeSchema } from "../../../dist/kernox.js";
-import { Kinetic } from "./Kinetic.js";
-import { Sprite } from "./Sprite.js";
+import type { PrototypeSchema } from "../../../dist/kernox";
+import { Kinetic } from "./Kinetic";
+import { Sprite } from "./Sprite";
 export interface Avatar extends Kinetic, Sprite {
     hp: number;
     level: number;
