@@ -1,14 +1,29 @@
 {
   "name": "kernox",
-  "version": "1.0.0",
-  "description": "<h1>Kernox</h1>",
-  "main": "dist/Kernox.min.js",
+  "version": "1.0.2",
+  "author": "Gabrel Fuente",
+  "description": "Kernox is a simple javascript framework designed to build highly decoupled real-time applications. Inspired on the Entity-Component-System architecture, Kernox lets you define entities based on prototypes with multi-inheritance, allocated within collections and processed by specialized classes called Systems, which communicate using events dispatched by an event broker.",
+  "keywords": [
+    "ecs",
+    "entity-component-system",
+    "framework",
+    "real-time",
+    "game",
+    "game-engine",
+    "javascript",
+    "typescript",
+    "modular",
+    "event-driven",
+    "prototypes",
+    "kernox"
+  ],
+  "main": "dist/kernox.min.js",
+  "types": "dist/kernox.d.ts",
   "files": [
     "dist",
     "README.md",
     "LICENSE"
   ],
-  "types": "dist/Kernox.d.ts",
   "type": "module",
   "scripts": {
     "build": "tsc && npx tsc-alias && webpack --mode=production && node bundle-types.js",
@@ -19,7 +34,6 @@
     "type": "git",
     "url": "git+https://github.com/WebAxol/Kernox.git"
   },
-  "author": "Gabrel Fuente",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/WebAxol/Kernox/issues"
