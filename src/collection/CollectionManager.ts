@@ -11,13 +11,25 @@ export class CollectionManager {
 
     constructor( private __kernox : Kernox ) {}
 
-    public get(collectionName : string) : AbstractCollection {
+    /**
+     * Searches for a collection by name and retrieves it if found.
+     * @param collectionName Name of collection
+     * @returns 
+     */
+
+    public get<T extends AbstractCollection>(collectionName : string) : T {
         const collection = this.collections.get(collectionName) || this.resolveImplicitNamespace(collectionName);
         if (!collection) {
             throw new Error(`Collection '${collectionName}' is not registered.`);
         }
-        return collection;
+        return collection as T;
     }
+
+    /**
+     * Registers new collection based on a constructor; the collection is identified by the name of its parent class.
+     * @param Ctr sub-class of AbstractCollection.
+     * @param namespace Optional parameter used by AddonLoader to specify a context when loading collections from an addon.
+     */
 
     public use(Ctr : new () => AbstractCollection, namespace :  string = ''): void {
 

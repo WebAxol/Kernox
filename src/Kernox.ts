@@ -1,11 +1,15 @@
-import { AddonLoader } from "./addon/AddonLoader.js";
-import { KernoAddon } from "./addon/KernoxAddon.js";
+import { AddonLoader }       from "./addon/AddonLoader.js";
+import { KernoAddon }        from "./addon/KernoxAddon.js";
 import { CollectionManager } from "./collection/CollectionManager.js";
-import { EntityFactory } from "./entity/EntityFactory.js";
-import { EventBroker } from "./event/EventBroker.js";
-import { SystemManager } from "./system/SystemManager.js";
+import { EntityFactory }     from "./entity/EntityFactory.js";
+import { EventBroker }       from "./event/EventBroker.js";
+import { SystemManager }     from "./system/SystemManager.js";
 import { LinearCollection }  from "./collection/LinearCollection.js";
 
+/**
+ * Top-level application component: central integration point that handles all resources, including entities, 
+ * collections, systems, and events.
+ */
 export class Kernox {
 
     private __entityFactory     = new EntityFactory(this);
@@ -14,8 +18,8 @@ export class Kernox {
     private __eventBroker       = new EventBroker(this);
     private __addonLoader       = new AddonLoader(this);
     
-    private frameCount = 0;
-    private paused = false;
+    private __frame = 0;
+    private __paused = false;
 
     /**
      * Kernox's top-level method, it starts the execution loop triggering subordinate systems.
@@ -28,12 +32,36 @@ export class Kernox {
         requestAnimationFrame(() => this.execute() );
         
         this.__systemManager.execute();
-        this.frameCount++;
+        this.__frame++;
     }
 
-    /**
-     * Integrates an addon: a set of systems, prototypes, collections and event listeners bundled within an object.
-     * @param addon
+  /**
+     * Integrates an 'addon' to the application instance, registering and setting up resources.
+     * @param addon Object that packages resources belonging to a context: it can contain a list of systems, collections, event listeners
+     * and entity prototypes, which will be registered.
+     * @example
+     * import { Kernox, KernoAddon } from "../../dist/kernox.js";
+     
+     const app = new Kernox();
+
+     // Recommended setup structure:
+     
+     import { prototypes  }   from "./setup/prototypes.js";
+     import { listeners   }   from "./setup/listeners.js";
+     import { systems     }   from "./setup/systems.js";
+     import { collections }   from "./setup/collections.js";
+     
+     // Resource bundler (Addon)
+     
+     const demoApp : KernoAddon = {
+         name : "demoApp",
+         prototypes,
+         systems,
+         collections,
+         listeners
+     };
+          
+    app.addonLoader.use(demoApp); // << Integrating addon to application
      */
     public use(addon : KernoAddon) : void {
           this.__addonLoader.use(addon);
@@ -74,7 +102,11 @@ export class Kernox {
     }
 
     public get frame(){
-        return this.frameCount;
+        return this.__frame;
+    }
+
+    public get paused(){
+        return this.__paused;
     }
 }
 

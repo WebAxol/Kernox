@@ -1,4 +1,4 @@
-import { Kernox } from "../Kernox.js";
+import type { Kernox } from "../Kernox.js";
 import { isSubclassOf } from "../utils/isSubclassOf.js";
 import { System } from "./System.js";
 
@@ -14,15 +14,15 @@ export class SystemManager {
      * Systems are executed in the order they were registered.
      */
     public execute() : void {
-        this.executionList.forEach((system) => { if(!system.isPaused) system.execute() });
+        this.executionList.forEach((system) => { if(!system.paused) system.execute() });
     }
 
     /**
      * @description Vinculates a system, so that it's execution method is called on every frame.
-     * @param system An instance of 'System'
-     * @returns 
+     * @param system An instance of 'System'.
+     * @returns True if new system is registered, false otherwise.
      */
-    public use(Ctor : new (kernox : Kernox) => System, namespace :  string = '') : boolean {
+    public use(Ctor : new (kernox : Kernox, context : string) => System, namespace :  string = '') : boolean {
         
         const systemName = namespace ? `${namespace}.${Ctor.name}` : Ctor.name;
 
@@ -35,7 +35,7 @@ export class SystemManager {
             return false;
         }
 
-        const system = new Ctor(this.__kernox);
+        const system = new Ctor(this.__kernox, namespace);
         this.systems.set(systemName, system);
         this.executionList.push(system);
 
