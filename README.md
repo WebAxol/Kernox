@@ -22,18 +22,23 @@ dP     dP `88888P' dP       dP    dP `88888P' dP'  `dP
   <b style="color: violet">Kernox</b> is a simple javascript <b style="color: white">framework</b> designed to build highly decoupled <b style="color: white">real-time</b> applications. Inspired on the Entity-Component-System architecture, Kernox lets you define <b style="color: white">entities</b> based on <b style="color: white">prototypes</b> with multi-inheritance, allocated within collections and processed by specialized classes called <b style="color: white">Systems</b>, which communicate using events dispatched by an <b style="color: white">event broker</b>.
 </p>
 <h2>Usage</h2>
+<p>Firstly, we need to install kernox:</p>
 
-First, create a 'Kernox' instance: the top-level class that controls the framework components.
+
+```bash
+npm i kernox --save
+```
+
+<p>Let's define the basic structure of our app.ts file, in which kernox will be set up. Notice we defiend a "setup" folder to separate resources like prototypes, systems and collections. Everything is packaged within "demoApp", in the form of an <b>addon</b>, which is integrated to the application.</p>
 
 ```ts
 // Example path : app.ts
 
-import { Kernox, KernoAddon }   from "Kernox";
+import { Kernox, KernoAddon }   from "kernox";
 
 // Recommended setup structure:
 
 import { prototypes  }   from "./setup/prototypes.js";
-import { listeners   }   from "./setup/listeners.js";
 import { systems     }   from "./setup/systems.js";
 import { collections }   from "./setup/collections.js";
 
@@ -43,8 +48,7 @@ const demoApp : KernoAddon = {
     name : "demoApp",
     prototypes,
     systems,
-    collections,
-    listeners
+    collections
 };
 
 // Instantiate Kernox, setup addons, and run
@@ -59,7 +63,7 @@ app.execute();
 ```ts
 // Example path : setup/prototypes.ts
 
-import { PrototypeSchema, Entity } from 'Kernox';
+import type { PrototypeSchema, Entity } from "kernox";
 
 type Vector2D = { x : number, y : number };
 
@@ -147,7 +151,7 @@ export const collections = [ Kinetics, Renderables, Players ];
 ```ts
 // Example path : setup/systems.ts
 
-import { System, LinearCollection } from 'Kernox';
+import { System, LinearCollection } from "kernox";
 
 class MovementSystem extends System {
   
