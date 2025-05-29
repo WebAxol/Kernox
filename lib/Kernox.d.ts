@@ -4,7 +4,7 @@ import { CollectionManager } from "./collection/CollectionManager.js";
 import { EntityFactory } from "./entity/EntityFactory.js";
 import { EventBroker } from "./event/EventBroker.js";
 import { SystemManager } from "./system/SystemManager.js";
-import { LinearCollection } from "./collection/LinearCollection.js";
+import { ArrayList } from "./collection/ArrayList.js";
 /**
  * Top-level application component: central integration point that handles all resources, including entities,
  * collections, systems, and events.
@@ -77,4 +77,4 @@ export declare class Kernox {
     get dt(): number;
     get fps(): number;
 }
-export { LinearCollection };
+export { ArrayList };
