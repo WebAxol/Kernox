@@ -12,8 +12,8 @@ export class System {
     protected __paused : boolean = false;
 
     constructor(
-        private __kernox : Kernox,
-        private __context : string
+        protected __kernox  : Kernox,
+        protected __context : string
     ){}
 
 
