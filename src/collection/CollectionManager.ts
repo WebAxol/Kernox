@@ -1,6 +1,6 @@
 import { AbstractCollection } from "./AbstractCollection.js";
 import { Entity } from "../entity/Entity.js";
-import { LinearCollection } from "./LinearCollection.js";
+import { ArrayList } from "./ArrayList.js";
 import { isSubclassOf } from "../utils/isSubclassOf.js";
 import { Kernox } from "../Kernox.js";
 
