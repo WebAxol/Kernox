@@ -1,5 +1,5 @@
-import type { Kernox } from "../Kernox";
-import { System } from "./System";
+import type { Kernox } from "../Kernox.js";
+import { System } from "./System.js";
 export declare class SystemManager {
     private __kernox;
     private systems;

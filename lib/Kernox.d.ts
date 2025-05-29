@@ -1,10 +1,10 @@
-import { AddonLoader } from "./addon/AddonLoader";
-import { KernoAddon } from "./addon/KernoxAddon";
-import { CollectionManager } from "./collection/CollectionManager";
-import { EntityFactory } from "./entity/EntityFactory";
-import { EventBroker } from "./event/EventBroker";
-import { SystemManager } from "./system/SystemManager";
-import { LinearCollection } from "./collection/LinearCollection";
+import { AddonLoader } from "./addon/AddonLoader.js";
+import { KernoAddon } from "./addon/KernoxAddon.js";
+import { CollectionManager } from "./collection/CollectionManager.js";
+import { EntityFactory } from "./entity/EntityFactory.js";
+import { EventBroker } from "./event/EventBroker.js";
+import { SystemManager } from "./system/SystemManager.js";
+import { LinearCollection } from "./collection/LinearCollection.js";
 /**
  * Top-level application component: central integration point that handles all resources, including entities,
  * collections, systems, and events.
@@ -17,25 +17,28 @@ export declare class Kernox {
     private __addonLoader;
     private __frame;
     private __paused;
+    private __lastTime;
+    private __dt;
+    private __fps;
     /**
      * Kernox's top-level method, it starts the execution loop triggering subordinate systems.
      */
-    execute(): void;
+    execute(timeSpan?: number): void;
     /**
        * Integrates an 'addon' to the application instance, registering and setting up resources.
        * @param addon Object that packages resources belonging to a context: it can contain a list of systems, collections, event listeners
        * and entity prototypes, which will be registered.
        * @example
-       * import { Kernox, KernoAddon } from "../../dist/kernox";
+       * import { Kernox, KernoAddon } from "../../dist/kernox.js";
        
        const app = new Kernox();
   
        // Recommended setup structure:
        
-       import { prototypes  }   from "./setup/prototypes";
-       import { listeners   }   from "./setup/listeners";
-       import { systems     }   from "./setup/systems";
-       import { collections }   from "./setup/collections";
+       import { prototypes  }   from "./setup/prototypes.js";
+       import { listeners   }   from "./setup/listeners.js";
+       import { systems     }   from "./setup/systems.js";
+       import { collections }   from "./setup/collections.js";
        
        // Resource bundler (Addon)
        
@@ -71,5 +74,7 @@ export declare class Kernox {
     get addonLoader(): AddonLoader;
     get frame(): number;
     get paused(): boolean;
+    get dt(): number;
+    get fps(): number;
 }
 export { LinearCollection };

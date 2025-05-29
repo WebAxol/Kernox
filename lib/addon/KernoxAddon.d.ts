@@ -1,6 +1,6 @@
-import type { PrototypeSchema } from "../entity/PrototypeSchema";
-import type { AbstractCollection } from "../collection/AbstractCollection";
-import type { System } from "../system/System";
+import type { PrototypeSchema } from "../entity/PrototypeSchema.js";
+import type { AbstractCollection } from "../collection/AbstractCollection.js";
+import type { System } from "../system/System.js";
 /**
  * Object containing resources related to a context:
  *

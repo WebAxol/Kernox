@@ -1,6 +1,6 @@
-import type { Kernox } from "../Kernox";
-import type { EventHandler } from "../event/EventBroker";
-import type { AbstractCollection } from "../collection/AbstractCollection";
+import type { Kernox } from "../Kernox.js";
+import type { EventHandler } from "../event/EventBroker.js";
+import type { AbstractCollection } from "../collection/AbstractCollection.js";
 /**
  * Encapsulates application logic which is part of kernox's execution loop.
  *
@@ -8,8 +8,8 @@ import type { AbstractCollection } from "../collection/AbstractCollection";
  * and process entities.
  */
 export declare class System {
-    private __kernox;
-    private __context;
+    protected __kernox: Kernox;
+    protected __context: string;
     protected __paused: boolean;
     constructor(__kernox: Kernox, __context: string);
     /**

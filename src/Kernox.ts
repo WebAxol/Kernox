@@ -20,16 +20,23 @@ export class Kernox {
     
     private __frame = 0;
     private __paused = false;
+    private __lastTime = 0;
+    private __dt  = 1;
+    private __fps = 0;
 
     /**
      * Kernox's top-level method, it starts the execution loop triggering subordinate systems.
      */
 
-    public execute() : void {
+    public execute(timeSpan = 30) : void {
 
         if(this.paused) return;
 
-        requestAnimationFrame(() => this.execute() );
+        this.__dt = timeSpan - this.__lastTime; 
+        this.__fps = 1000 / this.dt;
+        this.__lastTime = timeSpan;
+
+        requestAnimationFrame((timeSpan) => this.execute(timeSpan) );
         
         this.__systemManager.execute();
         this.__frame++;
@@ -107,6 +114,14 @@ export class Kernox {
 
     public get paused(){
         return this.__paused;
+    }
+
+    public get dt(){
+        return this.__dt;
+    }
+
+    public get fps(){
+        return this.__fps;
     }
 }
 
