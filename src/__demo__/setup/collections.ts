@@ -1,7 +1,7 @@
-import { LinearCollection } from '../../../dist/kernox.js';
+import { ArrayList } from '../../../dist/kernox.js';
 
-class Kinetics     extends LinearCollection {};
-class Renderables  extends LinearCollection {};
-class Avatars      extends LinearCollection {};
+class Kinetics     extends ArrayList {};
+class Renderables  extends ArrayList {};
+class Avatars      extends ArrayList {};
 
 export const collections = [ Kinetics, Renderables, Avatars ];

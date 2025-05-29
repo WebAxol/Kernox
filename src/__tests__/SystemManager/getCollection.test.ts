@@ -1,19 +1,23 @@
 import { CollectionManager } from "../../collection/CollectionManager.js";
 import { ArrayList } from "../../collection/ArrayList.js";
 import { Kernox } from "../../Kernox.js";
+import { System } from "../../system/System.js";
 
-const collectionManager = new CollectionManager(new Kernox());
+const app = new Kernox();
+const sys = new System(app, "");
+
 
 class Dogs extends ArrayList {};
 
-collectionManager.use(Dogs);
+app.collectionManager.use(Dogs);
 
-describe("CollectionManager.get()", () => {
+describe("Service.getCollection()", () => {
 
     var collectionName, res;
     const func = () => { 
         res = undefined;
-        res = collectionManager.get(collectionName); 
+        // Method is private: forcing the call
+        res = (sys as any).getCollection(collectionName); 
     }
 
     it("Must throw an error if an unexisting collection is requested", () => {

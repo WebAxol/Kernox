@@ -1,10 +1,10 @@
 import { CollectionManager } from "../../collection/CollectionManager.js";
-import { LinearCollection } from "../../collection/LinearCollection.js";
+import { ArrayList } from "../../collection/ArrayList.js";
 import { Kernox } from "../../Kernox.js";
 
 const collectionManager = new CollectionManager(new Kernox());
 
-class Players extends LinearCollection {};
+class Players extends ArrayList {};
 
 describe("CollectionManager.use()", () => {
 
