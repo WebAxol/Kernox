@@ -244,7 +244,7 @@ Finally, access to <a href="localhost:2025">localhost:2025</a> in your browser.
 
 There you go! A simple demo application as shown below:
 
-![Kernox - demo app](https://github.com/WebAxol/Kernox/demo/demo.png)
+![Kernox - simple demo app](https://github.com/WebAxol/Kernox/blob/main/demo/demo.png)
 
 
 <hr>
