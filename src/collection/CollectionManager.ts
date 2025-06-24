@@ -79,7 +79,7 @@ export class CollectionManager {
         var resolved, resource;
 
         for(const namespace of namespaces){
-            resource = this.collections[`${namespace}.${collectionName}`];
+            resource = this.collections.get(`${namespace}.${collectionName}`);
             if(resource && !resolved) resolved = resource;
             else if(resource){ 
                 throw new Error(`Ambiguous collection '${collectionName}' was requested: a namespace must be specified before it ( Ex. namespace.collectionName ).`);
