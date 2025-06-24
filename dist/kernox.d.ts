@@ -8,7 +8,7 @@ export class Kernox {
         /**
             * Kernox's top-level method, it starts the execution loop triggering subordinate systems.
             */
-        execute(): void;
+        execute(timeSpan?: number): void;
         /**
                 * Integrates an 'addon' to the application instance, registering and setting up resources.
                 * @param addon Object that packages resources belonging to a context: it can contain a list of systems, collections, event listeners
@@ -59,8 +59,9 @@ export class Kernox {
         get addonLoader(): AddonLoader;
         get frame(): number;
         get paused(): boolean;
+        get dt(): number;
+        get fps(): number;
 }
-export { LinearCollection };
 
 export class AddonLoader {
         constructor(__kernox: Kernox);
@@ -182,11 +183,56 @@ export class CollectionManager {
 }
 
 export class EntityFactory {
-    constructor(__kernox: Kernox);
-    prototype(prototype: PrototypeSchema<any>, namespace?: string): void;
-    create(type: string, params: object): Entity;
-    copyFromPrototype(recipient: Entity, prototype: PrototypeSchema<any>): void;
-    sendToRest(entity: Entity): void;
+        constructor(__kernox: Kernox);
+        /**
+            * Registers an entity prototype, based on which entities from a type will be created. The prototype can
+            * extend one or more existing prototypes, resulting on a base object having all attributes of its parents.
+            * @param prototype Schema that defines the prototype attributes, and other details
+            * @param namespace Specifies the addon-related context of the given prototype
+            * @example
+            *
+            * import { Kernox } from "kernox";
+            * import type { Entity, PrototypeSchema } from "kernox";
+
+                // Application instance
+
+                const app = new Kernox();
+                
+                // Interface of entity type (optional but recommended)
+
+                export interface Circle extends Entity {
+                        position   : Vector2D;
+                        radius     : number;
+                        color      : string;
+                };
+                
+                // Define prototype of type 'Circle'
+
+                export const circlePrototype : PrototypeSchema<Circle> = {
+                        name : "Circle",
+                        attributes : {
+                                position   : new Vector2D(0,0),
+                                radius : 1,
+                                color : "rgb(255,0,0)"
+                        } as Circle,
+                        collections : new Set([ "Renderables" ])
+                };
+         
+                // Register prototype
+
+                app.entityFactory.prototype(circlePrototype);
+            */
+        prototype(prototype: PrototypeSchema<any>, namespace?: string): void;
+        /**
+            * Instantiates an entity: an object populated with the attributes defined by its prototype, which by default
+            * contains the same values as it. Specific values can be assigned by adding them to the 'params' dictionary.
+            * @param type Entity type, related to an existing prototype
+            * @param params Dictionary of custom parameters, with which an entity's matching attributes will be defined
+            * @returns An entity of the given type built based on its prototype (and parameters if any)
+            */
+        create(type: string, params?: object): Entity;
+        copyFromPrototype(recipient: Entity, prototype: PrototypeSchema<any>): void;
+        sendToRest(entity: Entity): void;
 }
 
 export type EventHandler = (event: any) => void;
@@ -248,15 +294,57 @@ export class SystemManager {
         get<T extends System>(systemName: string): T | undefined;
 }
 
-export class LinearCollection extends AbstractCollection {
-    protected readonly entities: Set<Entity>;
-    protected __changed: boolean;
-    insert(entity: Entity): void;
-    remove(entity: Entity): void;
-    has(entity: Entity): boolean;
-    iterate(callback: (entity: Entity) => void): void;
-    filter(criteria: (entity: Entity) => boolean): Entity[];
-    get changed(): boolean;
+export class ArrayList<T extends Entity = any> extends AbstractCollection {
+        protected readonly entities: Set<T>;
+        protected __changed: boolean;
+        /**
+            * Appends an entity at the end of the current collection.
+            * @returns True if a new entity was added, and false otherwise.
+            */
+        insert(entity: T): boolean;
+        /**
+            * Removes an entity from the current collection, if exists.
+            * @returns True if the entity was removed, and false otherwise.
+            */
+        remove(entity: T): boolean;
+        /**
+            * Evaluates if a given entity belongs to the collection.
+            */
+        has(entity: T): boolean;
+        [Symbol.iterator](): Generator<T, void, unknown>;
+        /**
+            * @param start Initial index: by default equals zero.
+            * @param end   Final index; if negative, it points from right to left (ej. -1 points to last element).
+            * @param step  Index increment: can be positive or negative, but not be zero. Equals one by default.
+            * @returns An iterator for a given index range and step constant.
+            * @example
+            *
+            * for(const entity of collection.iterator(0,10,2)){
+            *     // Iterates from index zero to ten incrementing by two each time
+            *     console.log(entity);
+            * }
+            *
+            * for(const entity of collection.iterator(0,-1,1)){
+            *     // Iterates from index zero to last
+            *     console.log(entity);
+            * }
+            *
+            */
+        iterator(start?: number, end?: number, step?: number): IterableIterator<Entity>;
+        /**
+            * @returns An array populated with all entities within the collection.
+            */
+        toArray(): T[];
+        /**
+            * @param criteria Boolean callback used to filter entities.
+            * @returns Similar to 'toArray', but returns a filtered array of entities from the collection.
+            */
+        filter(criteria: (entity: Entity) => boolean): Entity[];
+        /**
+            * @returns The number of entities within the collection.
+            */
+        size(): number;
+        get changed(): boolean;
 }
 
 export interface PrototypeSchema<TypeSchema> {
@@ -267,11 +355,10 @@ export interface PrototypeSchema<TypeSchema> {
 }
 
 export abstract class AbstractCollection {
-    protected abstract entities: unknown;
+    protected abstract entities: any;
     protected abstract __changed: boolean;
-    abstract insert(entity: Entity): void;
-    abstract remove(entity: Entity): void;
-    abstract iterate(callback: Function): void;
+    abstract insert(entity: Entity): boolean;
+    abstract remove(entity: Entity): boolean;
 }
 
 /**
@@ -281,6 +368,8 @@ export abstract class AbstractCollection {
     * and process entities.
     */
 export class System {
+        readonly __kernox: Kernox;
+        protected __context: string;
         protected __paused: boolean;
         constructor(__kernox: Kernox, __context: string);
         /**

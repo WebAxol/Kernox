@@ -1,19 +1,25 @@
-import { System, LinearCollection } from '../../../dist/kernox.js';
+import { System } from "../../system/System.js";
+import { Kinetics } from "../setup/collections.js";
 
 export class MovementSystem extends System {
   
-  private kinetics! : LinearCollection;
+  private kinetics! : Kinetics;
 
   public init() : void {
     // Dependancy injection during application setup
-    this.kinetics = this.getCollection<LinearCollection>("Kinetics");
+    this.kinetics = this.getCollection<Kinetics>("Kinetics");
   }
 
+  // Called each frame
   public execute() : void {
-    // Called each frame
-    this.kinetics.iterate((entity : any) => {
-      entity.position.x += entity.velocity.x;
-      entity.position.y += entity.velocity.y;
-    });
+
+    // Collections are iterable
+    for(const entity of this.kinetics){
+
+      // Entities contain data, and are updated by systems
+      entity.position.x += entity.velocity.x * ((1000 / 60) / this.__kernox.dt);
+      entity.position.y += entity.velocity.y * ((1000 / 60) / this.__kernox.dt);
+
+    };
   }
-}
+};

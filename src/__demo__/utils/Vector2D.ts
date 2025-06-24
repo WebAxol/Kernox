@@ -19,4 +19,16 @@ export class Vector2D {
     public set y(y : number){
         this.__y= y;
     }
+
+    public add(v :Vector2D){
+        this.x += v.x;
+        this.y += v.y;
+        return this;
+    }
+
+    public sub(v :Vector2D){
+        this.x -= v.x;
+        this.y -= v.y;
+        return this;
+    }
 }

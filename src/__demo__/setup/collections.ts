@@ -1,7 +1,26 @@
-import { ArrayList } from '../../../dist/kernox.js';
+import { ArrayList } from '../../collection/ArrayList.js';
+import { Circle } from '../proto/Circle.js';
+import { Kinetic } from '../proto/Kinetic.js';
 
-class Kinetics     extends ArrayList {};
-class Renderables  extends ArrayList {};
-class Avatars      extends ArrayList {};
+// Collections contain "any" entity type by default, allowing easy and flexible usage
 
-export const collections = [ Kinetics, Renderables, Avatars ];
+/*
+We can specify the entity type stored by each collection for stronger typing.
+Below we have two ArrayLists containing the 'Kinetic' and 'Circle' types respectively.
+*/
+
+export class Kinetics     extends ArrayList<Kinetic>{};
+export class Renderables  extends ArrayList<Circle> {};
+
+/* 
+If a collections contains different entity types, TypeScript operators can be used to compose types,
+for example, if we had multiple shapes to render: 
+
+class Renderables extends ArrayList<Square | Circle | Triangle> 
+
+It is up to you!
+*/
+
+// It is recommended to store collections within an array, to bundle them inside an addon.
+
+export const collections = [ Kinetics, Renderables ];

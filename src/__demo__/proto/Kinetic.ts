@@ -1,4 +1,5 @@
-import type { PrototypeSchema, Entity } from "../../../dist/kernox.js";
+import type { Entity } from "../../entity/Entity.js";
+import type { PrototypeSchema } from "../../entity/PrototypeSchema.js";
 import { Vector2D } from "../utils/Vector2D.js";
 
 export interface Kinetic extends Entity {
