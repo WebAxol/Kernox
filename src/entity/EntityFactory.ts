@@ -10,6 +10,44 @@ export class EntityFactory{
    
     constructor( private __kernox : Kernox ){}
 
+    /**
+     * Registers an entity prototype, based on which entities from a type will be created. The prototype can
+     * extend one or more existing prototypes, resulting on a base object having all attributes of its parents.
+     * @param prototype Schema that defines the prototype attributes, and other details
+     * @param namespace Specifies the addon-related context of the given prototype
+     * @example
+     *  
+     * import { Kernox } from "kernox";
+     * import type { Entity, PrototypeSchema } from "kernox";
+
+        // Application instance
+
+        const app = new Kernox();
+        
+        // Interface of entity type (optional but recommended)
+
+        export interface Circle extends Entity {
+            position   : Vector2D;
+            radius     : number;
+            color      : string; 
+        };
+        
+        // Define prototype of type 'Circle'
+
+        export const circlePrototype : PrototypeSchema<Circle> = {
+            name : "Circle",
+            attributes : {
+                position   : new Vector2D(0,0),
+                radius : 1,
+                color : "rgb(255,0,0)"
+            } as Circle,
+            collections : new Set([ "Renderables" ])
+        };
+     
+        // Register prototype
+
+        app.entityFactory.prototype(circlePrototype);
+     */
     public prototype(prototype : PrototypeSchema<any>, namespace :  string = '') : void {
 
         const name = namespace ? `${namespace}.${prototype.name}` : prototype.name;
@@ -59,8 +97,14 @@ export class EntityFactory{
 
         this.types.set(name, prototype);
     }
-
-    public create(type : string, params : object) : Entity {
+    /**
+     * Instantiates an entity: an object populated with the attributes defined by its prototype, which by default
+     * contains the same values as it. Specific values can be assigned by adding them to the 'params' dictionary.
+     * @param type Entity type, related to an existing prototype
+     * @param params Dictionary of custom parameters, with which an entity's matching attributes will be defined
+     * @returns An entity of the given type built based on its prototype (and parameters if any)
+     */
+    public create(type : string, params : object = {}) : Entity {
 
         const prototype : PrototypeSchema<any> | undefined = this.types.get(type) || this.resolveImplicitNamespace(type);
 
@@ -70,13 +114,24 @@ export class EntityFactory{
 
         const entity : Entity = new Entity('' + this.nextID++, type);
 
-        this.copyFromPrototype(entity, prototype);
+        this.deepAssign(entity, prototype.attributes);
 
         for(const param of Object.keys(params)){
             if(param in entity && !param.includes("_")) entity[param] = params[param];
         }
 
-        for(const collection of (prototype.collections || [])){
+        // Extract context (namespace) for automatic inference whenever collection context isn't explicit.
+
+        const splitted = type.split(".");
+        const context = splitted.length == 2 ? splitted[0] : undefined;
+
+        // Assign entity to collections
+
+        for(let collection of (prototype.collections || [])){
+            
+            if(context) collection = `${context}.${collection}`;
+
+            this.__kernox.collectionManager.addEntityTo(entity,collection);
             entity.linkTo(collection);
         }
 
@@ -89,22 +144,33 @@ export class EntityFactory{
     }
 
     public sendToRest(entity : Entity) : void {
-        
+
     }
 
     private resolveImplicitNamespace(type : string) : PrototypeSchema<any> | undefined {
+        
         const namespaces = this.__kernox.addonLoader.namespaces;
         
         var resolved, resource;
 
         for(const namespace of namespaces){
-            resource = this.types[`${namespace}.${type}`];
+
+            resource = this.types.get(`${namespace}.${type}`);
             if(resource && !resolved) resolved = resource;
             else if(resource) throw new Error(`Ambiguous entity type '${type}' was requested: a namespace must be specified before it ( Ex. namespace.type ).`);
         }
 
         return resolved;
     }
+
+    /**
+     * Copies all attributes of a prototype into a recipient; if the prototype contains
+     * objects or instances, original references are untouched, and deep copies are created instead.
+     * @param recipient Destiny object, which will carry the properties
+     * @param prototype Base object, from which properties are copied
+     * @param seen (internal) Stores already assigned objects to avoid reasigning them on recursive calls
+     * @returns Nothing, it mutates the recipient object 
+     */
 
     private deepAssign(recipient : Object, prototype : any, seen = new WeakMap()) : void {
         
