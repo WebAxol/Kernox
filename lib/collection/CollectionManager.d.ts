@@ -1,6 +1,6 @@
-import { AbstractCollection } from "./AbstractCollection";
-import { Entity } from "../entity/Entity";
-import { Kernox } from "../Kernox";
+import { AbstractCollection } from "./AbstractCollection.js";
+import { Entity } from "../entity/Entity.js";
+import { Kernox } from "../Kernox.js";
 export declare class CollectionManager {
     private __kernox;
     private collections;
