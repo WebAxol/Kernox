@@ -226,6 +226,26 @@ class PlayerInputSystem extends System {
 
 export const systems = [ MovementSystem, PlayerInputSystem ];
 ```
+<hr>
+<h3>Demo</h3>
+
+First clone the repository:
+
+``` bash
+git clone https://github.com/WebAxol/Kernox.git
+```
+Then execute the following npm command:
+
+``` bash
+npm start
+```
+
+Finally, access to <a href="localhost:2025">localhost:2025</a> in your browser.
+
+There you go! A simple demo application as shown below:
+
+![Kernox - demo app](https://github.com/WebAxol/Kernox/demo/demo.png)
+
 
 <hr>
 <h3>Contribute</h3>
@@ -234,3 +254,4 @@ export const systems = [ MovementSystem, PlayerInputSystem ];
 git clone https://github.com/WebAxol/Kernox.git
 ```
 
+Please send your pull requests to the dev branch. Thanks for your contribution!
