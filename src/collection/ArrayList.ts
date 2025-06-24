@@ -1,15 +1,15 @@
 import { AbstractCollection } from "./AbstractCollection.js";
 import { Entity } from "../entity/Entity.js";
 
-export class ArrayList extends AbstractCollection{
-    protected readonly entities: Set<Entity> = new Set();
+export class ArrayList<T extends Entity = any> extends AbstractCollection{
+    protected readonly entities: Set<T> = new Set();
     protected __changed : boolean = false;
 
     /**
      * Appends an entity at the end of the current collection.
      * @returns True if a new entity was added, and false otherwise.
      */
-    public insert(entity: Entity): boolean {
+    public insert(entity: T): boolean {
         
         if(this.has(entity)) return false;
         
@@ -24,7 +24,7 @@ export class ArrayList extends AbstractCollection{
      * Removes an entity from the current collection, if exists.
      * @returns True if the entity was removed, and false otherwise.
      */
-    public remove(entity: Entity): boolean {
+    public remove(entity: T): boolean {
 
         if(!this.entities.delete(entity)) return false;
         
@@ -37,13 +37,14 @@ export class ArrayList extends AbstractCollection{
     /**
      * Evaluates if a given entity belongs to the collection.
      */
-    public has(entity: Entity): boolean {
+    public has(entity: T): boolean {
         return this.entities.has(entity);
     }
 
     *[Symbol.iterator](){
+        const arr = this.toArray();
         for (let i = 0; i < this.size(); i++) {
-            yield this.entities[i];
+            yield arr[i];
         }
     }
     /**
@@ -69,21 +70,32 @@ export class ArrayList extends AbstractCollection{
         end : number = -1, 
         step : number = 1
     ) : IterableIterator<Entity>{
-        
-        var index = start;
+
+        if(step == 0){
+            throw Error("Attempted to create non-changing iterator: 'step' parameter cannot be zero");
+        }
+
         const size = this.size();
-        const entities = this.entities;
+
+        if(end < 0) end = size - end;
+
+        // Limit iteration ranges to avoid indices out of range
+
+        start = Math.max(0,start) - 1;
+        end   = Math.min(end,size - 1);
+
+        var index = start;
+        const entities = this.toArray();
 
         return {
             [Symbol.iterator]() {
               return this;
             },
             next() {
-              if (index < size && index <= end) {
-                return { value: entities[index += step], done: false };
-              } else {
-                return { value: undefined, done: true };
-              }
+                if (index < size && index <= end) 
+                    return {  value: entities[index += step], done: false };
+                else
+                    return { value: undefined, done: true };    
             }
         };
     }
