@@ -1,23 +1,23 @@
-import { AbstractCollection } from "./AbstractCollection";
-import { Entity } from "../entity/Entity";
-export declare class ArrayList extends AbstractCollection {
-    protected readonly entities: Set<Entity>;
+import { AbstractCollection } from "./AbstractCollection.js";
+import { Entity } from "../entity/Entity.js";
+export declare class ArrayList<T extends Entity = any> extends AbstractCollection {
+    protected readonly entities: Set<T>;
     protected __changed: boolean;
     /**
      * Appends an entity at the end of the current collection.
      * @returns True if a new entity was added, and false otherwise.
      */
-    insert(entity: Entity): boolean;
+    insert(entity: T): boolean;
     /**
      * Removes an entity from the current collection, if exists.
      * @returns True if the entity was removed, and false otherwise.
      */
-    remove(entity: Entity): boolean;
+    remove(entity: T): boolean;
     /**
      * Evaluates if a given entity belongs to the collection.
      */
-    has(entity: Entity): boolean;
-    [Symbol.iterator](): Generator<any, void, unknown>;
+    has(entity: T): boolean;
+    [Symbol.iterator](): Generator<T, void, unknown>;
     /**
      * @param start Initial index: by default equals zero.
      * @param end   Final index; if negative, it points from right to left (ej. -1 points to last element).
@@ -40,7 +40,7 @@ export declare class ArrayList extends AbstractCollection {
     /**
      * @returns An array populated with all entities within the collection.
      */
-    toArray(): Entity[];
+    toArray(): T[];
     /**
      * @param criteria Boolean callback used to filter entities.
      * @returns Similar to 'toArray', but returns a filtered array of entities from the collection.
