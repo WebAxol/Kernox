@@ -1,5 +1,5 @@
-import { AbstractCollection } from "./AbstractCollection.js";
-import { Entity } from "../entity/Entity.js";
+import { AbstractCollection } from "./AbstractCollection";
+import { Entity } from "../entity/Entity";
 export declare class ArrayList<T extends Entity = any> extends AbstractCollection {
     protected readonly entities: Set<T>;
     protected __changed: boolean;

@@ -1,8 +1,9 @@
 import type { Entity } from "../../entity/Entity";
 import type { PrototypeSchema } from "../../entity/PrototypeSchema";
 import { Vector2D } from "../utils/Vector2D";
-export interface Kinetic extends Entity {
+export interface Circle extends Entity {
     position: Vector2D;
-    velocity: Vector2D;
+    radius: number;
+    color: string;
 }
-export declare const kineticPrototype: PrototypeSchema<Kinetic>;
+export declare const circlePrototype: PrototypeSchema<Circle>;

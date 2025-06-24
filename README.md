@@ -148,11 +148,11 @@ export const prototypes = [ kineticPrototype, playerPrototype ];
 ```ts
 // Example path : setup/collections.ts
 
-import { LinearCollection } from 'Kernox';
+import { ArrayList } from 'Kernox';
 
-class Kinetics     extends LinearCollection {};
-class Renderables  extends LinearCollection {};
-class Players      extends LinearCollection {};
+class Kinetics     extends ArrayList {};
+class Renderables  extends ArrayList {};
+class Players      extends ArrayList {};
 
 export const collections = [ Kinetics, Renderables, Players ];
 ```
@@ -162,11 +162,11 @@ export const collections = [ Kinetics, Renderables, Players ];
 ```ts
 // Example path : setup/systems.ts
 
-import { System, LinearCollection } from "kernox";
+import { System, ArrayList } from 'Kernox';
 
 class MovementSystem extends System {
   
-  private kinetics : LinearCollection = new LinearCollection(); // Dummy instance
+  private kinetics : ArrayList = new ArrayList(); // Dummy instance
 
   public init(){
     // Dependancy injection during application setup

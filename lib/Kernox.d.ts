@@ -1,10 +1,10 @@
-import { AddonLoader } from "./addon/AddonLoader.js";
-import { KernoAddon } from "./addon/KernoxAddon.js";
-import { CollectionManager } from "./collection/CollectionManager.js";
-import { EntityFactory } from "./entity/EntityFactory.js";
-import { EventBroker } from "./event/EventBroker.js";
-import { SystemManager } from "./system/SystemManager.js";
-import { ArrayList } from "./collection/ArrayList.js";
+import { AddonLoader } from "./addon/AddonLoader";
+import { KernoAddon } from "./addon/KernoxAddon";
+import { CollectionManager } from "./collection/CollectionManager";
+import { EntityFactory } from "./entity/EntityFactory";
+import { EventBroker } from "./event/EventBroker";
+import { SystemManager } from "./system/SystemManager";
+import { ArrayList } from "./collection/ArrayList";
 /**
  * Top-level application component: central integration point that handles all resources, including entities,
  * collections, systems, and events.
@@ -29,16 +29,16 @@ export declare class Kernox {
        * @param addon Object that packages resources belonging to a context: it can contain a list of systems, collections, event listeners
        * and entity prototypes, which will be registered.
        * @example
-       * import { Kernox, KernoAddon } from "../../dist/kernox.js";
+       * import { Kernox, KernoAddon } from "../../dist/kernox";
        
        const app = new Kernox();
   
        // Recommended setup structure:
        
-       import { prototypes  }   from "./setup/prototypes.js";
-       import { listeners   }   from "./setup/listeners.js";
-       import { systems     }   from "./setup/systems.js";
-       import { collections }   from "./setup/collections.js";
+       import { prototypes  }   from "./setup/prototypes";
+       import { listeners   }   from "./setup/listeners";
+       import { systems     }   from "./setup/systems";
+       import { collections }   from "./setup/collections";
        
        // Resource bundler (Addon)
        
