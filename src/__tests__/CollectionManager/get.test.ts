@@ -1,10 +1,10 @@
 import { CollectionManager } from "../../collection/CollectionManager.js";
-import { LinearCollection } from "../../collection/LinearCollection.js";
+import { ArrayList } from "../../collection/ArrayList.js";
 import { Kernox } from "../../Kernox.js";
 
 const collectionManager = new CollectionManager(new Kernox());
 
-class Dogs extends LinearCollection {};
+class Dogs extends ArrayList {};
 
 collectionManager.use(Dogs);
 
@@ -24,6 +24,6 @@ describe("CollectionManager.get()", () => {
     it("Must return the corresponding instance of 'AbstractCollection' when a registered collection name is provided", () => {
         collectionName = "Dogs";
         expect(func).not.toThrow();
-        expect(res).toBeInstanceOf(LinearCollection);
+        expect(res).toBeInstanceOf(ArrayList);
     });
 });

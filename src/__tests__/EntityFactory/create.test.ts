@@ -1,18 +1,23 @@
 import { EntityFactory } from "../../entity/EntityFactory.js";
-import { enemyPrototype, circlePrototype, spatialPrototype,kineticPrototype, corpsePrototype } from "../__samples__/entityPrototypes.js";
+import { enemyPrototype, circlePrototype, spatialPrototype,kineticPrototype, corpsePrototype } from "../__samples__/prototypes.js";
 import { Kernox } from "../../Kernox.js";
+import { Circles, Dead, Enemies, Kinetics } from "../__samples__/collections.js";
 
-const entityFactory = new EntityFactory(new Kernox());
+const kernox = new Kernox(); 
 
-entityFactory.prototype(enemyPrototype); 
-entityFactory.prototype(corpsePrototype);
+kernox.entityFactory.prototype(enemyPrototype); 
+kernox.entityFactory.prototype(corpsePrototype);
+kernox.collectionManager.use(Enemies);
+kernox.collectionManager.use(Dead);
+kernox.collectionManager.use(Circles);
+kernox.collectionManager.use(Kinetics);
 
-describe("EntityFactory.prototype()", () => {
+describe("EntityFactory.create()", () => {
 
     test("That attributes from all parents are copied correctly and in the right order to the recipient entity", () => {
 
         const params = {};
-        const entity = entityFactory.create("Enemy", params) as any;
+        const entity = kernox.entityFactory.create("Enemy", params) as any;
 
         expect(entity.type).toBe("Enemy");
         expect(entity.orientation).toEqual(spatialPrototype.attributes.orientation);
@@ -31,7 +36,7 @@ describe("EntityFactory.prototype()", () => {
             position : { x : 10, y : 15 }, 
             damage : 100 
         };
-        const entity = entityFactory.create("Enemy", params) as any;
+        const entity = kernox.entityFactory.create("Enemy", params) as any;
 
         expect(entity.position).toEqual(params.position);
         expect(entity.damage).toEqual(params.damage);
@@ -39,12 +44,12 @@ describe("EntityFactory.prototype()", () => {
 
     test("Creation of an entity from an already existing one", () => {
 
-        const enemy : any = entityFactory.create("Enemy", {
+        const enemy : any = kernox.entityFactory.create("Enemy", {
             position : { x : 10, y : 15 }, 
             damage : 100, 
         });
 
-        const corpse : any = entityFactory.create("Corpse", enemy);
+        const corpse : any = kernox.entityFactory.create("Corpse", enemy);
     
         expect(corpse.type).toBe("Corpse");
         expect(corpse.loot).toEqual(enemy.loot);

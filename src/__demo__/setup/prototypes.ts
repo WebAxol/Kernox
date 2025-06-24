@@ -1,9 +1,9 @@
 import { kineticPrototype } from "../proto/Kinetic.js";
-import { spritePrototype } from "../proto/Sprite.js";
-import { avatarPrototype } from "../proto/Avatar.js";
+import { circlePrototype } from "../proto/Circle.js";
+
+// Just like with systems and collections, we bundle prototypes to integrate them into the addon
 
 export const prototypes = [
     kineticPrototype,
-    spritePrototype,
-    avatarPrototype
+    circlePrototype
 ];

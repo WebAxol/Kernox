@@ -6,4 +6,6 @@ export declare class Vector2D {
     get y(): number;
     set x(x: number);
     set y(y: number);
+    add(v: Vector2D): this;
+    sub(v: Vector2D): this;
 }
