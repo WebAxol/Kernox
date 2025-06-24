@@ -1,5 +1,5 @@
 import { EntityFactory } from "../../entity/EntityFactory.js";
-import { enemyPrototype, circlePrototype, spatialPrototype,kineticPrototype } from "../__samples__/entityPrototypes.js";
+import { enemyPrototype, circlePrototype, spatialPrototype,kineticPrototype } from "../__samples__/prototypes.js";
 import { Kernox } from "../../Kernox.js";
 
 const entityFactory = new EntityFactory(new Kernox());
