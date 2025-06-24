@@ -30,16 +30,24 @@ export class Kernox {
 
     public execute(timeSpan = 30) : void {
 
-        if(this.paused) return;
+        try{
 
-        this.__dt = timeSpan - this.__lastTime; 
-        this.__fps = 1000 / this.dt;
-        this.__lastTime = timeSpan;
+            if(this.paused) return;
 
-        requestAnimationFrame((timeSpan) => this.execute(timeSpan) );
-        
-        this.__systemManager.execute();
-        this.__frame++;
+            this.__dt = timeSpan - this.__lastTime; 
+            this.__fps = 1000 / this.dt;
+            this.__lastTime = timeSpan;
+
+            requestAnimationFrame((timeSpan) => this.execute(timeSpan) );
+            
+            this.__systemManager.execute();
+            this.__frame++;
+        }
+        catch(err : any){
+            console.error(err);
+            console.warn("A run-time error has occurred, execution was paused");
+            this.__paused = true;
+        }
     }
 
   /**

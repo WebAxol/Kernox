@@ -1,5 +1,5 @@
-import { Kernox } from "../Kernox";
-import { KernoAddon } from "./KernoxAddon";
+import { Kernox } from "../Kernox.js";
+import { KernoAddon } from "./KernoxAddon.js";
 export declare class AddonLoader {
     private __kernox;
     private __namespaces;
@@ -9,16 +9,16 @@ export declare class AddonLoader {
      * @param addon Object that packages resources belonging to a context: it can contain a list of systems, collections, event listeners
      * and entity prototypes, which will be registered.
      * @example
-     * import { Kernox, KernoAddon } from "../../dist/kernox";
+     * import { Kernox, KernoAddon } from "../../dist/kernox.js";
      
      const app = new Kernox();
 
      // Recommended setup structure:
      
-     import { prototypes  }   from "./setup/prototypes";
-     import { listeners   }   from "./setup/listeners";
-     import { systems     }   from "./setup/systems";
-     import { collections }   from "./setup/collections";
+     import { prototypes  }   from "./setup/prototypes.js";
+     import { listeners   }   from "./setup/listeners.js";
+     import { systems     }   from "./setup/systems.js";
+     import { collections }   from "./setup/collections.js";
      
      // Resource bundler (Addon)
      
@@ -38,7 +38,7 @@ export declare class AddonLoader {
      * which isolates their resources, preventing name collisions.
      * @returns A string set containing all namespaces
      * @example
-     * import { Kernox, KernoAddon } from "../../dist/kernox";
+     * import { Kernox, KernoAddon } from "../../dist/kernox.js";
      * const app = new Kernox();
      *
      * app.use({

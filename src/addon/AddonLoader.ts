@@ -92,9 +92,9 @@ export class AddonLoader {
         });
     }
 
-    private registerSystems(services : (new () => System)[], namespace : string){
-        services.forEach(service => {
-            this.__kernox.systemManager.use(service, namespace);
+    private registerSystems(systems : (new () => System)[], namespace : string){
+        systems.forEach(system => {
+            this.__kernox.systemManager.use(system, namespace);
         });
     }
 }
