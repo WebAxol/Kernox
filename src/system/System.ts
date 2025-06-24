@@ -12,7 +12,7 @@ export class System {
     protected __paused : boolean = false;
 
     constructor(
-        protected __kernox  : Kernox,
+        public readonly __kernox : Kernox,
         protected __context : string
     ){}
 

@@ -8,7 +8,7 @@ import type { AbstractCollection } from "../collection/AbstractCollection.js";
  * and process entities.
  */
 export declare class System {
-    protected __kernox: Kernox;
+    readonly __kernox: Kernox;
     protected __context: string;
     protected __paused: boolean;
     constructor(__kernox: Kernox, __context: string);

@@ -36,6 +36,9 @@ export class SystemManager {
         }
 
         const system = new Ctor(this.__kernox, namespace);
+      
+        system.init();
+        
         this.systems.set(systemName, system);
         this.executionList.push(system);
 
